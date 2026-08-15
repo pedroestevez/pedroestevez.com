@@ -49,7 +49,10 @@ const res = await fetch(api('/v13/deployments'), {
   body: JSON.stringify({
     name: PROJECT,
     project: PROJECT,
-    target: 'preview', // <-- never 'production'
+    // NO `target` field. The API only accepts 'production', 'staging', or a
+    // custom environment id; omitting it is how a PREVIEW deployment is
+    // created. Production therefore cannot be reached from this script by
+    // accident -- it would require explicitly adding target: 'production'.
     files,
     projectSettings: { framework: 'astro' },
   }),
