@@ -2,9 +2,30 @@
 import Layout from '../layouts/Layout.astro';
 
 const email = 'pedroestevez001@gmail.com';
+const repoUrl = 'https://github.com/pedroestevez/pedroestevez.com';
 const hireMailto = `mailto:${email}?subject=${encodeURIComponent('Hiring inquiry — Business Analyst role')}`;
 const quoteMailto = (svc: string) =>
   `mailto:${email}?subject=${encodeURIComponent(`Quote request — ${svc}`)}`;
+
+// Quoted character-exact from src/layouts/Layout.astro:44-53 (leading indentation
+// normalised). Rendered in a <pre> — do not reformat.
+const posthogSnippet = `window.posthog.init(phKey, {
+  api_host: phProxy || phHost,
+  // With api_host proxied, the SDK can't infer where the PostHog app
+  // lives — state it so toolbar/UI links resolve.
+  ui_host: phHost.replace('.i.posthog.com', '.posthog.com'),
+  persistence: phCookieless ? 'memory' : 'localStorage+cookie',
+  person_profiles: 'identified_only',
+  capture_pageview: true,
+  autocapture: true,
+});`;
+
+// Excerpted from docs/ENGINE.md §4 (Development-Engine-Seed) — a spec Pedro wrote.
+const routingSpec =
+  'Model selection: model = max(points-tier, risk-tier). A 1-point payments task still ' +
+  'routes to Opus, runs the security pass, and gets stricter acceptance criteria. Risk ' +
+  "floors behavior up — that's how \"needs more care\" is encoded, as gates, not an " +
+  'inflated point value.';
 
 const nav = [
   { href: '#about', label: 'about' },
@@ -23,6 +44,27 @@ const stats = [
   { value: '3', unit: 'langs', label: 'EN · ES · PT fluent' },
 ];
 
+// About panel — real shipped artifacts, not process steps.
+const shipped = [
+  {
+    name: 'pedroestevez.com',
+    detail: 'Astro 5 + Tailwind 4, first version in one prompt',
+  },
+  {
+    name: 'Development Engine — an agentic build crew',
+    detail:
+      'specced by me — two human gates: no engine change merges without me, no work runs outside an approved cycle',
+  },
+  {
+    name: 'Org-wide ERD + company-wide data strategy',
+    detail: 'United Data Technologies',
+  },
+  {
+    name: 'Selenium extraction pipelines + SQL analysis',
+    detail: 'Wythe Capital Trust',
+  },
+];
+
 const experience = [
   {
     dates: '2026.04 — 2026.07',
@@ -30,9 +72,8 @@ const experience = [
     role: 'Business Analyst II · Contract',
     chips: ['GCP', 'Power Automate'],
     points: [
-      'Led a GCP adoption enablement program built from scratch, coordinating training across teams.',
+      'Led a GCP adoption enablement program built from scratch, coordinating training across teams — recognized by management inside a three-month engagement.',
       'Automated the program’s own workflows with Power Automate.',
-      'Recognized by management inside a 3-month engagement.',
     ],
   },
   {
@@ -41,7 +82,7 @@ const experience = [
     role: 'Business Analyst',
     chips: ['−$20K/yr', '+$15K/yr', '−$5K/yr'],
     points: [
-      'Automated customer invoicing for an entire business unit: Excel prototype → Power BI paginated reports + SQL integration, eliminating $20K/yr in manual cost.',
+      'Automated customer invoicing for an entire business unit — SQL integration feeding Power BI paginated reports, logic proven in an Excel prototype first. Eliminated $20K/yr in manual cost.',
       'Rescued a $15K/yr at-risk contract with a rapid-turnaround Power BI dashboard.',
       'Authored the company-wide data strategy roadmap and the org-wide ERD.',
       'Redesigned reverse-logistics routing, removing $5K/yr in cost.',
@@ -72,16 +113,26 @@ const experience = [
 
 const skillGroups = [
   {
+    name: 'Programming & Data',
+    items: [
+      'SQL — expert',
+      'Python',
+      'Selenium — automated extraction pipelines',
+      'Data modeling & ERDs',
+      'Data governance',
+    ],
+  },
+  {
     name: 'BI & Reporting',
     items: ['Power BI (incl. paginated reports)', 'Tableau', 'Excel — expert', 'Power Query', 'VBA'],
   },
   {
-    name: 'Data & Programming',
-    items: ['SQL — expert', 'Python', 'Data modeling & ERDs', 'Data governance'],
-  },
-  {
     name: 'Automation & AI',
-    items: ['Power Automate', 'Claude / Claude Code — AI-assisted development', 'Agentic system design', 'Selenium'],
+    items: [
+      'Claude / Claude Code — AI-assisted development',
+      'Agentic system design',
+      'Power Automate',
+    ],
   },
   {
     name: 'Delivery',
@@ -95,6 +146,7 @@ const services = [
     name: 'Data Cleanup',
     price: 'from $400',
     desc: 'One messy dataset in, one trustworthy dataset out.',
+    entry: 'start here — the low-commitment way to see how I work',
     points: [
       'Duplicate removal & missing-value review',
       'Formatting fixes & category standardization',
@@ -167,25 +219,25 @@ const services = [
 <Layout>
   <!-- ===== NAV ===== -->
   <header class="fixed inset-x-0 top-0 z-50 border-b border-line-soft bg-harbor/85 backdrop-blur-md">
-    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-      <a href="#top" class="flex items-center gap-2.5 font-display text-lg tracking-tight text-chalk">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-6 sm:px-8">
+      <a href="#top" class="-ml-2 inline-flex min-h-11 items-center gap-2 px-2 font-display text-[17px] tracking-tight text-chalk">
         PE<span aria-hidden="true" class="inline-block h-4 w-2 bg-amber"></span>
       </a>
       <nav aria-label="Sections" class="hidden items-center gap-6 md:flex">
         {nav.map((n) => (
           <a
             href={n.href}
-            class="font-mono text-[13px] text-mist transition-colors hover:text-amber"
+            class="inline-flex min-h-11 items-center px-2 font-mono text-[13px] text-mist transition-colors hover:text-amber"
           >{n.label}</a>
         ))}
       </nav>
       <a
         href={hireMailto}
-        class="hidden rounded-sm bg-amber px-4 py-2 font-mono text-[13px] font-semibold text-harbor transition-colors hover:bg-amber-soft md:inline-block"
+        class="cta-primary hidden min-h-11 items-center justify-center rounded-sm bg-amber px-4 py-2 font-mono text-[13px] font-semibold text-harbor md:inline-flex"
       >hire_me</a>
       <a
         href="#contact"
-        class="font-mono text-[13px] text-amber md:hidden"
+        class="inline-flex min-h-11 items-center px-2 font-mono text-[13px] text-amber md:hidden"
       >contact →</a>
     </div>
   </header>
@@ -193,32 +245,33 @@ const services = [
   <main id="top">
     <!-- ===== HERO ===== -->
     <section class="plot-grid relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-24">
-      <div class="mx-auto grid max-w-6xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.15fr_0.85fr]">
+      <div class="mx-auto grid max-w-6xl items-center gap-14 px-6 sm:px-8 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <p class="eyebrow">Miami, FL · 25.76°N 80.19°W</p>
-          <h1 class="mt-5 font-display text-[clamp(3rem,9vw,5.5rem)] leading-[0.95] tracking-tight uppercase">
+          <h1 class="mt-6 font-display text-[clamp(3rem,9vw,5.5rem)] leading-[0.95] tracking-tight uppercase">
             Pedro<br />Estevez<span aria-hidden="true" class="cursor-blink ml-2 inline-block h-[0.72em] w-[0.42em] bg-amber align-baseline"></span>
           </h1>
           <p class="mt-6 font-mono text-sm font-medium tracking-wide text-amber uppercase">
-            Business Analyst · Data &amp; AI Automation
+            Business Analyst · SQL · Python · AI Automation
           </p>
-          <p class="mt-5 max-w-xl text-lg leading-relaxed text-mist">
-            I turn messy operations into <span class="text-chalk">automated, measurable systems</span> —
-            prototyped fast, shipped in the tools your team already runs, and priced by what they save.
+          <p class="mt-6 max-w-xl text-[17px] leading-relaxed text-mist">
+            I turn messy operations into <span class="text-chalk">systems that run themselves and
+            prove it in dollars</span> — I write the SQL and the Python, design the agents that do
+            the rest, and ship it in the tools your team already runs.
           </p>
 
           <div class="mt-8 flex flex-wrap items-center gap-4">
             <a
               href={hireMailto}
-              class="rounded-sm bg-amber px-6 py-3 font-mono text-sm font-semibold text-harbor transition-colors hover:bg-amber-soft"
+              class="cta-primary inline-flex min-h-11 items-center rounded-sm bg-amber px-6 py-4 font-mono text-sm font-semibold text-harbor"
             >Hire me</a>
             <a
               href="#services"
-              class="rounded-sm border border-line px-6 py-3 font-mono text-sm font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
-            >Work with me ↓</a>
+              class="inline-flex min-h-11 items-center font-mono text-[13px] text-mist underline-offset-4 transition-colors hover:text-amber hover:underline"
+            >or see fixed-scope data projects ↓</a>
           </div>
 
-          <p class="mt-8 inline-flex items-center gap-2.5 rounded-full border border-delta/40 bg-delta/10 px-4 py-1.5 font-mono text-[13px] text-delta">
+          <p class="mt-8 inline-flex items-center gap-2 rounded-full border border-delta/40 bg-delta/10 px-4 py-1.5 font-mono text-[13px] text-delta">
             <span class="pulse-dot inline-block h-2 w-2 rounded-full bg-delta"></span>
             Available immediately — contract or full-time
           </p>
@@ -227,35 +280,50 @@ const services = [
         <!-- signature: site telemetry panel -->
         <aside aria-label="Site telemetry" class="reveal">
           <div class="rounded-md border border-line bg-panel-2/90 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)]">
-            <div class="flex items-center justify-between border-b border-line px-5 py-3">
-              <span class="eyebrow !text-[11px]">site_telemetry</span>
-              <span class="font-mono text-[11px] text-dim">rev 1.0</span>
+            <div class="flex items-center justify-between gap-4 border-b border-line px-6 py-4">
+              <span class="eyebrow">site_telemetry</span>
+              <span class="font-mono text-[13px] text-dim">rev 1.1</span>
             </div>
             <dl class="divide-y divide-line-soft font-mono text-[13px]">
-              <div class="flex items-center justify-between px-5 py-3.5">
+              <div class="flex min-h-14 items-center justify-between gap-4 px-6">
                 <dt class="text-dim">built_with</dt>
                 <dd class="text-chalk">Claude Code</dd>
               </div>
-              <div class="flex items-center justify-between px-5 py-3.5">
-                <dt class="text-dim">prompts_used</dt>
+              <div class="flex min-h-14 items-center justify-between gap-4 px-6">
+                <dt class="text-dim">initial_prompts</dt>
                 <dd class="text-chalk">1</dd>
               </div>
-              <div class="flex items-center justify-between px-5 py-3.5">
-                <dt class="text-dim">build_time</dt>
+              <div class="flex min-h-14 items-center justify-between gap-4 px-6">
+                <dt class="text-dim">initial_build</dt>
                 <dd class="text-amber">&lt; 60 min</dd>
               </div>
-              <div class="flex items-center justify-between px-5 py-3.5">
+              <div class="flex min-h-14 items-center justify-between gap-4 px-6">
                 <dt class="text-dim">stack</dt>
-                <dd class="text-chalk">Astro + Tailwind</dd>
+                <dd class="text-chalk">Astro 5 · Tailwind 4</dd>
               </div>
-              <div class="flex items-center justify-between px-5 py-3.5">
+              <div class="flex min-h-14 items-center justify-between gap-4 px-6">
+                <dt class="text-dim">analytics</dt>
+                <dd class="text-chalk">cookieless · self-proxied</dd>
+              </div>
+              <div class="flex min-h-14 items-center justify-between gap-4 px-6">
+                <dt class="text-dim">source</dt>
+                <dd>
+                  <a
+                    href={repoUrl}
+                    rel="noopener"
+                    target="_blank"
+                    class="inline-flex min-h-11 items-center text-amber hover:underline"
+                  >pedroestevez.com ↗</a>
+                </dd>
+              </div>
+              <div class="flex min-h-14 items-center justify-between gap-4 px-6">
                 <dt class="text-dim">status</dt>
                 <dd class="flex items-center gap-2 text-delta">
                   <span class="inline-block h-1.5 w-1.5 rounded-full bg-delta"></span>live
                 </dd>
               </div>
             </dl>
-            <p class="border-t border-line px-5 py-3 font-mono text-[11px] text-dim">
+            <p class="border-t border-line px-6 py-4 font-mono text-[13px] text-dim">
               // this page is the demo — see <a href="#ai" class="text-amber hover:underline">ai_projects</a>
             </p>
           </div>
@@ -265,13 +333,13 @@ const services = [
 
     <!-- ===== STATS STRIP ===== -->
     <section aria-label="Impact statistics" class="border-y border-line bg-panel-2/60">
-      <div class="mx-auto grid max-w-6xl grid-cols-2 divide-line-soft px-5 sm:px-8 md:grid-cols-5 md:divide-x">
+      <div class="mx-auto grid max-w-6xl grid-cols-2 divide-line-soft px-6 sm:px-8 md:grid-cols-5 md:divide-x">
         {stats.map((s, i) => (
-          <div class:list={['px-2 py-7 md:px-6', i === stats.length - 1 && 'col-span-2 md:col-span-1']}>
+          <div class:list={['px-2 py-8 md:px-6', i === stats.length - 1 && 'col-span-2 md:col-span-1']}>
             <p class="font-display text-3xl tracking-tight text-amber">
               {s.value}<span class="ml-1 font-mono text-sm font-medium text-dim">{s.unit}</span>
             </p>
-            <p class="mt-1.5 font-mono text-[11px] tracking-wider text-mist uppercase">{s.label}</p>
+            <p class="mt-2 font-mono text-[13px] tracking-wider text-mist uppercase">{s.label}</p>
           </div>
         ))}
       </div>
@@ -279,7 +347,7 @@ const services = [
 
     <!-- ===== ABOUT ===== -->
     <section id="about" class="py-20 sm:py-28">
-      <div class="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-[1fr_0.8fr]">
+      <div class="mx-auto grid max-w-6xl gap-12 px-6 sm:px-8 lg:grid-cols-[1fr_0.8fr]">
         <div class="reveal">
           <p class="eyebrow">about</p>
           <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
@@ -292,9 +360,11 @@ const services = [
             bleeding money and replaces it with a system that runs itself and proves it with numbers.
             </p>
             <p>
-              My pattern is consistent: <span class="text-chalk">prototype in Excel</span> to get the logic
-              right fast, <span class="text-chalk">implement in Power BI and Power Automate</span> so it
-              scales, then <span class="text-chalk">drive adoption</span> so the fix actually sticks.
+              The pattern is consistent: get the data model and the rules right first —
+              <span class="text-chalk">SQL, ERDs</span>, and whatever prototype proves the logic
+              fastest — then build the system that runs without me, and drive adoption until it
+              sticks. Sometimes that system is a Power BI report. Sometimes it's
+              <span class="text-chalk">a script, a pipeline, or an agent crew</span>.
             </p>
             <p>
               Now AI-enabled: I build working software with <span class="text-chalk">Claude Code</span> and
@@ -305,30 +375,23 @@ const services = [
         </div>
         <div class="reveal">
           <div class="rounded-md border border-line bg-panel p-6">
-            <p class="eyebrow !text-[11px]">operating_mode</p>
-            <ol class="mt-5 space-y-4 font-mono text-sm">
-              <li class="flex items-baseline gap-3">
-                <span class="text-amber">01</span>
-                <span class="text-chalk">Prototype in Excel — logic first, fast</span>
-              </li>
-              <li class="flex items-baseline gap-3">
-                <span class="text-amber">02</span>
-                <span class="text-chalk">Implement in Power BI / Power Automate</span>
-              </li>
-              <li class="flex items-baseline gap-3">
-                <span class="text-amber">03</span>
-                <span class="text-chalk">Drive adoption until it sticks</span>
-              </li>
-              <li class="flex items-baseline gap-3">
-                <span class="text-amber">04</span>
-                <span class="text-chalk">Measure the savings, in dollars</span>
-              </li>
+            <p class="eyebrow">shipped</p>
+            <ol class="mt-6 space-y-4 font-mono text-sm">
+              {shipped.map((s, i) => (
+                <li class="flex items-baseline gap-3">
+                  <span class="flex-none text-amber">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="min-w-0">
+                    <span class="block text-chalk">{s.name}</span>
+                    <span class="block text-[13px] leading-relaxed text-dim">{s.detail}</span>
+                  </span>
+                </li>
+              ))}
             </ol>
-            <div class="mt-6 border-t border-line-soft pt-5">
-              <p class="font-mono text-[11px] tracking-wider text-dim uppercase">languages — fluent</p>
-              <div class="mt-3 flex gap-2">
+            <div class="mt-6 border-t border-line-soft pt-6">
+              <p class="font-mono text-[13px] tracking-wider text-dim uppercase">languages — fluent</p>
+              <div class="mt-4 flex gap-2">
                 {['English', 'Español', 'Português'].map((l) => (
-                  <span class="rounded-sm border border-line px-3 py-1 font-mono text-xs text-mist">{l}</span>
+                  <span class="rounded-sm border border-line px-3 py-1 font-mono text-[13px] text-mist">{l}</span>
                 ))}
               </div>
             </div>
@@ -339,7 +402,7 @@ const services = [
 
     <!-- ===== EXPERIENCE ===== -->
     <section id="experience" class="border-t border-line-soft py-20 sm:py-28">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
         <div class="reveal">
           <p class="eyebrow">experience</p>
           <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">The track record</h2>
@@ -353,7 +416,7 @@ const services = [
                   {job.chips.map((c) => (
                     <span
                       class:list={[
-                        'rounded-sm border px-2 py-0.5 text-[11px]',
+                        'rounded-sm border px-2 py-0.5 text-[13px]',
                         /^[−+]\$/.test(c)
                           ? 'border-delta/40 bg-delta/10 text-delta'
                           : 'border-line text-mist',
@@ -369,7 +432,7 @@ const services = [
                 </h3>
                 <ul class="mt-4 space-y-2.5">
                   {job.points.map((p) => (
-                    <li class="flex gap-3 text-[15px] leading-relaxed text-mist">
+                    <li class="flex gap-3 text-sm leading-relaxed text-mist">
                       <span aria-hidden="true" class="mt-[0.55em] h-px w-4 flex-none bg-amber/70"></span>
                       <span>{p}</span>
                     </li>
@@ -384,18 +447,18 @@ const services = [
 
     <!-- ===== SKILLS ===== -->
     <section id="skills" class="border-t border-line-soft bg-panel-2/40 py-20 sm:py-28">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
         <div class="reveal">
           <p class="eyebrow">skills</p>
           <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">The toolkit</h2>
         </div>
-        <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {skillGroups.map((g) => (
             <div class="reveal rounded-md border border-line bg-panel p-6">
               <h3 class="font-mono text-[13px] font-semibold tracking-wider text-amber uppercase">{g.name}</h3>
               <ul class="mt-4 space-y-2.5">
                 {g.items.map((item) => (
-                  <li class="flex gap-2.5 text-sm leading-snug text-mist">
+                  <li class="flex gap-2 text-sm leading-snug text-mist">
                     <span aria-hidden="true" class="mt-[0.45em] h-1 w-1 flex-none rounded-full bg-amber/70"></span>
                     <span>{item}</span>
                   </li>
@@ -404,19 +467,29 @@ const services = [
             </div>
           ))}
         </div>
-        <div class="reveal mt-6 grid gap-5 sm:grid-cols-2">
+        <div class="reveal mt-6 grid gap-6 sm:grid-cols-2">
           <div class="rounded-md border border-line bg-panel p-6">
-            <h3 class="font-mono text-[13px] font-semibold tracking-wider text-amber uppercase">Certifications</h3>
-            <p class="mt-3 text-sm leading-relaxed text-mist">
-              Microsoft Azure Fundamentals (AZ-900) · Microsoft Azure Data Fundamentals (DP-900)
+            <h3 class="font-mono text-[13px] font-semibold tracking-wider text-amber uppercase">Credentials</h3>
+            <p class="mt-4 text-sm leading-relaxed text-mist">
+              BBA, Management Information Systems — Florida International University
+            </p>
+            <p class="mt-2 font-mono text-[13px] leading-relaxed text-dim">
+              Microsoft AZ-900 · DP-900 · Project Management MicroMasters (RIT)
             </p>
           </div>
           <div class="rounded-md border border-line bg-panel p-6">
-            <h3 class="font-mono text-[13px] font-semibold tracking-wider text-amber uppercase">Education</h3>
-            <p class="mt-3 text-sm leading-relaxed text-mist">
-              BBA, Management Information Systems — Florida International University ·
-              Project Management MicroMasters — RIT
+            <h3 class="font-mono text-[13px] font-semibold tracking-wider text-amber uppercase">Source &amp; systems</h3>
+            <p class="mt-4 text-sm leading-relaxed text-mist">
+              This page: Astro 5 + Tailwind 4, cookieless analytics behind a same-origin proxy,
+              every motion gated on prefers-reduced-motion. The source of this page is public —
+              the build, the analytics config, the motion gating.
             </p>
+            <a
+              href={repoUrl}
+              rel="noopener"
+              target="_blank"
+              class="mt-2 inline-flex min-h-11 items-center font-mono text-[13px] text-amber hover:underline"
+            >github.com/pedroestevez/pedroestevez.com ↗</a>
           </div>
         </div>
       </div>
@@ -424,70 +497,105 @@ const services = [
 
     <!-- ===== AI PROJECTS ===== -->
     <section id="ai" class="border-t border-line-soft py-20 sm:py-28">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
         <div class="reveal">
           <p class="eyebrow">ai_projects</p>
           <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
             Requirements in.<br />Working software out.
           </h2>
         </div>
-        <div class="mt-12 grid gap-5 lg:grid-cols-2">
-          <article class="reveal rounded-md border border-line bg-panel p-7 transition-colors hover:border-amber/60">
-            <p class="font-mono text-[11px] tracking-wider text-dim uppercase">agentic system · human-gated</p>
-            <h3 class="mt-3 text-xl font-bold text-chalk">Software that builds itself from agile specs</h3>
-            <p class="mt-4 text-[15px] leading-relaxed text-mist">
-              I author user stories with acceptance criteria in Linear, the way any product team would.
-              From there, an AI agent crew picks up each issue, builds the feature, and reports back —
-              with a human gate at every merge. The requirements discipline of a Business Analyst,
-              executed at machine speed.
-            </p>
-            <p class="mt-5 font-mono text-[12px] text-dim">
-              Linear specs → agent crew → review gate → shipped
-            </p>
-          </article>
-          <article class="reveal rounded-md border border-amber/50 bg-panel p-7 shadow-[0_0_40px_-18px_rgba(255,178,36,0.4)]">
-            <p class="font-mono text-[11px] tracking-wider text-amber uppercase">live proof · you're looking at it</p>
-            <h3 class="mt-3 text-xl font-bold text-chalk">Functional websites in under an hour</h3>
-            <p class="mt-4 text-[15px] leading-relaxed text-mist">
-              One structured prompt into Claude Code produces a complete, deployable site — copy,
-              design system, responsive build, and metadata included. No template, no drag-and-drop
-              builder, no week of back-and-forth.
-            </p>
-            <p class="mt-5 font-mono text-[13px] font-medium text-amber">
-              This site is one of them.
-            </p>
-          </article>
+        <div class="mt-12 grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-start">
+          <!-- left: stacked write-ups, no uniform card grid -->
+          <div class="min-w-0 space-y-10">
+            <article class="reveal border-l-2 border-amber/70 pl-6">
+              <p class="font-mono text-[13px] tracking-wider text-dim uppercase">agentic system · human-gated</p>
+              <h3 class="mt-4 text-xl font-bold text-chalk">Software that builds itself from agile specs</h3>
+              <p class="mt-4 text-sm leading-relaxed text-mist">
+                I designed the crew and the rules it runs on: roles, model routing
+                (<code class="font-mono text-[13px] text-chalk">model = max(points-tier, risk-tier)</code>),
+                two human gates, and file-overlap clustering that decides what can run in parallel.
+                I write the specs in Linear; the crew executes them; nothing merges without my
+                review. The requirements discipline of a Business Analyst, executed at machine speed.
+              </p>
+              <p class="mt-6 font-mono text-[13px] text-dim">
+                Linear specs → agent crew → review gate → shipped
+              </p>
+            </article>
+            <article class="reveal rounded-md border border-amber/50 bg-panel p-6 shadow-[0_0_40px_-18px_rgba(255,178,36,0.4)]">
+              <p class="font-mono text-[13px] tracking-wider text-amber uppercase">live proof · you're looking at it</p>
+              <h3 class="mt-4 text-xl font-bold text-chalk">Functional websites in under an hour</h3>
+              <p class="mt-4 text-sm leading-relaxed text-mist">
+                One structured prompt into Claude Code produced the first version of this site —
+                copy, design system, responsive build, and metadata included. No template, no
+                drag-and-drop builder, no week of back-and-forth.
+              </p>
+              <p class="mt-6 font-mono text-[13px] font-medium text-amber">
+                This site started as one of them.
+              </p>
+            </article>
+          </div>
+
+          <!-- right: sticky artifact panel — the things a reader can inspect -->
+          <aside aria-label="Inspectable artifacts" class="reveal min-w-0 lg:sticky lg:top-24">
+            <div class="rounded-md border border-line bg-panel-2/90 p-6 shadow-[0_0_40px_-18px_rgba(255,178,36,0.4)]">
+              <div>
+                <p class="font-mono text-[13px] text-dim">spec · docs/ENGINE.md §4 — model routing</p>
+                <p class="mt-4 border-l-2 border-line pl-4 font-mono text-[13px] leading-relaxed text-chalk">
+                  {routingSpec}
+                </p>
+                <p class="mt-4 font-mono text-[13px] text-dim">// from a spec I wrote — repo not public</p>
+              </div>
+              <div class="mt-6 border-t border-line-soft pt-6">
+                <p class="font-mono text-[13px] text-dim">source · src/layouts/Layout.astro:44-53</p>
+                <pre class="artifact-pre mt-4 overflow-x-auto border-l-2 border-amber/70 pl-4 font-mono text-[13px] leading-relaxed text-chalk"><code>{posthogSnippet}</code></pre>
+                <p class="mt-4 font-mono text-[13px] text-dim">
+                  // <a
+                    href={repoUrl}
+                    rel="noopener"
+                    target="_blank"
+                    class="text-amber hover:underline"
+                  >verbatim from this page's source ↗</a>
+                </p>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </section>
 
     <!-- ===== SERVICES ===== -->
     <section id="services" class="border-t border-line-soft bg-panel-2/40 py-20 sm:py-28">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
         <div class="reveal max-w-2xl">
           <p class="eyebrow">services — fixed scope</p>
           <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">Productized data services</h2>
-          <p class="mt-5 text-[17px] leading-relaxed text-mist">
+          <p class="mt-6 text-[17px] leading-relaxed text-mist">
             Fixed prices for defined outcomes — no hourly billing, no retainers. Send your dataset
             and your question — get back a confirmed price and a delivery date. Prices are starting
-            points; final scope is shaped on a free discovery call.
+            points; final scope is shaped on a free discovery call. Larger scope? Quoted as a second
+            phase — never hourly. This is not staff augmentation and not an ongoing analytics
+            function — it's a defined piece of work with an end date. Priced by what the work saves,
+            not by hours spent.
           </p>
         </div>
-        <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
             <article class="reveal flex flex-col rounded-md border border-line bg-panel p-6 transition-colors hover:border-amber/60">
               <div class="flex items-baseline justify-between gap-3">
-                <span class="rounded-sm bg-harbor px-2 py-1 font-mono text-[11px] font-semibold tracking-widest text-amber">{s.code}</span>
-                <span class="text-right font-mono text-[15px] font-semibold text-chalk">
-                  {s.price.startsWith('from') ? <><span class="text-[11px] font-medium text-dim">from </span>{s.price.slice(5)}</> : s.price}
+                <span class="rounded-sm bg-harbor px-2 py-1 font-mono text-[13px] font-semibold tracking-widest text-amber">{s.code}</span>
+                <span class="text-right font-mono text-sm font-semibold text-chalk">
+                  {s.price.startsWith('from') ? <><span class="text-[13px] font-medium text-dim">from </span>{s.price.slice(5)}</> : s.price}
                 </span>
               </div>
-              {s.priceNote && <p class="mt-1 text-right font-mono text-[11px] text-dim">{s.priceNote}</p>}
-              <h3 class="mt-4 text-lg font-bold text-chalk">{s.name}</h3>
-              <p class="mt-1.5 text-sm leading-relaxed text-dim">{s.desc}</p>
+              {s.priceNote && <p class="mt-1 text-right font-mono text-[13px] text-dim">{s.priceNote}</p>}
+              <h3 class="mt-4 text-[17px] font-bold text-chalk">{s.name}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-dim">{s.desc}</p>
+              {s.entry && (
+                <p class="mt-2 font-mono text-[13px] leading-relaxed text-dim">{s.entry}</p>
+              )}
               <ul class="mt-4 flex-1 space-y-2">
                 {s.points.map((p) => (
-                  <li class="flex gap-2.5 text-sm leading-snug text-mist">
+                  <li class="flex gap-2 text-sm leading-snug text-mist">
                     <span aria-hidden="true" class="mt-[0.5em] h-px w-3.5 flex-none bg-amber/70"></span>
                     <span>{p}</span>
                   </li>
@@ -495,7 +603,7 @@ const services = [
               </ul>
               <a
                 href={quoteMailto(s.name)}
-                class="mt-6 inline-block rounded-sm border border-line px-4 py-2 text-center font-mono text-[13px] font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
+                class="mt-6 inline-flex min-h-11 items-center justify-center rounded-sm border border-line px-4 py-2 text-center font-mono text-[13px] font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
               >Get a quote →</a>
             </article>
           ))}
@@ -505,26 +613,32 @@ const services = [
 
     <!-- ===== CONTACT ===== -->
     <section id="contact" class="plot-grid-up relative border-t border-line-soft py-24 sm:py-32">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8 text-center">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8 text-center">
         <p class="eyebrow reveal justify-center">contact</p>
-        <h2 class="reveal mt-5 font-display text-[clamp(2.25rem,6vw,4rem)] leading-[1.02] tracking-tight uppercase">
+        <h2 class="reveal mt-6 font-display text-[clamp(2.25rem,6vw,3rem)] leading-[1.02] tracking-tight uppercase">
           Got a messy process?<br /><span class="text-amber">Let's automate it.</span>
         </h2>
-        <p class="reveal mx-auto mt-6 max-w-xl text-lg leading-relaxed text-mist">
+        <p class="reveal mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-mist">
           Hiring for a role, or holding a dataset that owes you answers — either way, the first
           conversation is free.
         </p>
-        <div class="reveal mt-9 flex flex-wrap items-center justify-center gap-4">
+        <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-4">
           <a
             href={`mailto:${email}`}
-            class="rounded-sm bg-amber px-7 py-3.5 font-mono text-sm font-semibold text-harbor transition-colors hover:bg-amber-soft"
+            class="cta-primary inline-flex min-h-11 items-center rounded-sm bg-amber px-6 py-4 font-mono text-sm font-semibold text-harbor"
           >{email}</a>
           <a
             href="https://linkedin.com/in/pedro-estevez-0827a77a"
             rel="noopener"
             target="_blank"
-            class="rounded-sm border border-line px-7 py-3.5 font-mono text-sm font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
+            class="inline-flex min-h-11 items-center rounded-sm border border-line px-6 py-4 font-mono text-sm font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
           >LinkedIn ↗</a>
+          <a
+            href={repoUrl}
+            rel="noopener"
+            target="_blank"
+            class="inline-flex min-h-11 items-center rounded-sm border border-line px-6 py-4 font-mono text-sm font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
+          >Source ↗</a>
         </div>
         <p class="reveal mt-8 font-mono text-[13px] text-dim">
           Miami, FL · working in <span class="text-mist">EN / ES / PT</span> · remote or on-site
@@ -534,9 +648,9 @@ const services = [
   </main>
 
   <footer class="border-t border-line-soft py-8">
-    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-5 font-mono text-[12px] text-dim sm:flex-row sm:px-8">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 font-mono text-[13px] text-dim sm:flex-row sm:px-8">
       <p>© {new Date().getFullYear()} Pedro Estevez</p>
-      <p>built_with Claude Code in &lt; 60 min · <span class="text-amber">this page is the demo</span></p>
+      <p>built_with Claude Code · first version in &lt; 60 min · <span class="text-amber">this page is the demo</span></p>
     </div>
   </footer>
 </Layout>

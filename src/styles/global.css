@@ -14,7 +14,7 @@
   --color-line-soft: #1a2740;
   --color-chalk: #eaf0f9;
   --color-mist: #94a3bc;
-  --color-dim: #61718c;
+  --color-dim: #7d8ca6;
   --color-amber: #ffb224;
   --color-amber-soft: #ffd587;
   --color-delta: #3ed598;
@@ -113,6 +113,74 @@ body {
   animation: pulse-dot 2.2s ease-out infinite;
 }
 
+/* --- artifact code block: keep the horizontal scroll affordance visible --- */
+/* The quoted source must never clip mid-token: this panel's whole job is to be
+   inspected, and a line cut at `'localStorag` reads as broken rather than
+   scrollable. Soft-wrap instead, with a hanging indent so a wrapped
+   continuation stays visually distinct from a real new line. The scrollbar
+   rules below remain as a fallback for anything unbreakable. */
+.artifact-pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  /* 2.25rem − 1.25rem hanging indent puts the first line back on the element's
+     own pl-4 (1rem) gutter beside the amber rule, and sets wrapped
+     continuations 1.25rem further in. */
+  padding-left: 2.25rem;
+  text-indent: -1.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+  padding-bottom: 0.5rem;
+}
+.artifact-pre::-webkit-scrollbar {
+  height: 8px;
+}
+.artifact-pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+.artifact-pre::-webkit-scrollbar-thumb {
+  background: var(--color-line);
+  border-radius: 4px;
+}
+.artifact-pre:hover::-webkit-scrollbar-thumb {
+  background: var(--color-amber);
+}
+
+/* --- primary CTA: the H1 block-caret, grown on the button and slid on hover --- */
+.cta-primary {
+  position: relative;
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 180ms linear;
+}
+.cta-primary::after {
+  content: "";
+  display: inline-block;
+  width: 0.42em;
+  height: 0.72em;
+  margin-left: 0.5em;
+  vertical-align: -0.06em;
+  background: currentColor;
+  opacity: 0.55;
+  transform: translateX(-2px);
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms linear;
+}
+.cta-primary:hover,
+.cta-primary:focus-visible {
+  transform: translateY(-2px);
+  background-color: var(--color-amber-soft);
+  box-shadow:
+    4px 4px 0 0 var(--color-line),
+    0 12px 28px -14px rgb(255 178 36 / 0.55);
+}
+.cta-primary:hover::after,
+.cta-primary:focus-visible::after {
+  transform: translateX(2px);
+  opacity: 1;
+}
+
 /* --- scroll reveal --- */
 .reveal {
   opacity: 0;
@@ -131,5 +199,17 @@ body {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .cta-primary,
+  .cta-primary::after {
+    transition: none;
+  }
+  .cta-primary:hover,
+  .cta-primary:focus-visible {
+    transform: none;
+  }
+  .cta-primary:hover::after,
+  .cta-primary:focus-visible::after {
+    transform: translateX(-2px);
   }
 }
