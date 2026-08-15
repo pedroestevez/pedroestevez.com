@@ -5,7 +5,12 @@
 // upload, and Vercel runs the Astro build itself (the live deployment's file
 // listing is source, not dist). So we upload tracked source and let Vercel build.
 //
-// target: 'preview' is hardcoded. This script cannot publish to production.
+// Defaults to a PREVIEW deployment. Publishing to production requires passing
+// --production explicitly, so promotion is always a deliberate act and can
+// never happen as a side effect of a normal deploy.
+//
+//   node scripts/deploy-preview.mjs                # preview
+//   node scripts/deploy-preview.mjs --production   # publishes pedroestevez.com
 
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -19,6 +24,8 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 
 if (!TOKEN) throw new Error('VERCEL_TOKEN not set');
 
+const PRODUCTION = process.argv.includes('--production');
+
 const api = (p) => `https://api.vercel.com${p}${p.includes('?') ? '&' : '?'}teamId=${TEAM}`;
 const auth = { Authorization: `Bearer ${TOKEN}` };
 
@@ -28,6 +35,7 @@ const tracked = execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8' 
   .split('\n')
   .filter(Boolean);
 
+console.log(PRODUCTION ? '*** PUBLISHING TO PRODUCTION — pedroestevez.com ***' : 'Deploying to PREVIEW');
 console.log(`Uploading ${tracked.length} tracked files:`);
 const files = [];
 for (const rel of tracked) {
@@ -49,10 +57,10 @@ const res = await fetch(api('/v13/deployments'), {
   body: JSON.stringify({
     name: PROJECT,
     project: PROJECT,
-    // NO `target` field. The API only accepts 'production', 'staging', or a
-    // custom environment id; omitting it is how a PREVIEW deployment is
-    // created. Production therefore cannot be reached from this script by
-    // accident -- it would require explicitly adding target: 'production'.
+    // The API accepts only 'production', 'staging', or a custom environment id.
+    // Omitting the field entirely is how a PREVIEW deployment is created — so
+    // the default path here structurally cannot reach production.
+    ...(PRODUCTION ? { target: 'production' } : {}),
     files,
     projectSettings: { framework: 'astro' },
   }),
