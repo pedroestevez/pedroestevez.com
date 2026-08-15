@@ -1,0 +1,82 @@
+---
+import '../styles/global.css';
+
+const title = 'Pedro Estevez — Business Analyst · Data & AI Automation';
+const description =
+  'Business Analyst in Miami, FL who turns messy operations into automated, measurable systems. 8+ years across utilities, supply chain, and finance ops — Power BI, SQL, Power Automate, and AI-assisted development with Claude Code. Available for contract or full-time, plus productized data services.';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href="https://pedroestevez.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://pedroestevez.com/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="Pedro Estevez" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="theme-color" content="#0a1322" />
+    <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      (function () {
+        const phKey = 'phc_z9bzR7xbRS627xEzAx5aJA4oeym2atNSBtbGRyVDgDAs';
+        const phHost = 'https://us.i.posthog.com';
+        // Same-origin reverse proxy: ad blockers match on *.posthog.com, so
+        // ingestion and SDK assets are routed through this domain instead.
+        // Requires the matching rewrites in vercel.json.
+        const phProxy = '/px';
+        const phCookieless = true;
+        const phSlug = 'pedroestevez';
+        const phBusiness = 'Pedro Estevez';
+
+        var assetBase = phProxy || phHost.replace('.i.posthog.com', '-assets.i.posthog.com');
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = assetBase + '/static/array.js';
+        s.onload = function () {
+          window.posthog.init(phKey, {
+            api_host: phProxy || phHost,
+            // With api_host proxied, the SDK can't infer where the PostHog app
+            // lives — state it so toolbar/UI links resolve.
+            ui_host: phHost.replace('.i.posthog.com', '.posthog.com'),
+            persistence: phCookieless ? 'memory' : 'localStorage+cookie',
+            person_profiles: 'identified_only',
+            capture_pageview: true,
+            autocapture: true,
+          });
+          window.posthog.register({ ac_site: phSlug, ac_business: phBusiness });
+        };
+        document.head.appendChild(s);
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script>
+      const items = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+        items.forEach((el) => io.observe(el));
+      } else {
+        items.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
+  </body>
+</html>
