@@ -7,6 +7,25 @@ const hireMailto = `mailto:${email}?subject=${encodeURIComponent('Hiring inquiry
 const quoteMailto = (svc: string) =>
   `mailto:${email}?subject=${encodeURIComponent(`Quote request — ${svc}`)}`;
 
+// The booking app — a separate, multi-tenant Next.js + Supabase application,
+// deployed once and addressed per tenant by slug. This site links to it; it is
+// not embedded here.
+const bookingUrl = 'https://booking.aligncompass.com/pedroestevez';
+const bookingRepoUrl = 'https://github.com/pedroestevez/Booking-Platform';
+
+// Stated plainly, and kept in step with what the app's own confirmation screen
+// says after a booking. A demo that overclaims is worse than one that doesn't.
+const bookingWired = [
+  'Postgres with row-level security — every row scoped by customer_id',
+  'Live availability from weekly rules, in the tenant\'s timezone',
+  'A real booking row, held slot, and .ics calendar invite',
+  'Multi-tenant by slug — one deploy serves every customer',
+];
+const bookingNotWired = [
+  'Confirmation emails — no provider key, so nobody is notified yet',
+  'Online payment — Stripe is the next release',
+];
+
 // Quoted character-exact from src/layouts/Layout.astro:44-53 (leading indentation
 // normalised). Rendered in a <pre> — do not reformat.
 const posthogSnippet = `window.posthog.init(phKey, {
@@ -32,6 +51,7 @@ const nav = [
   { href: '#experience', label: 'experience' },
   { href: '#skills', label: 'skills' },
   { href: '#ai', label: 'ai_projects' },
+  { href: '#booking', label: 'booking_app' },
   { href: '#services', label: 'services' },
   { href: '#contact', label: 'contact' },
 ];
@@ -559,6 +579,73 @@ const services = [
                 </p>
               </div>
             </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BOOKING APP ===== -->
+    <section id="booking" class="border-t border-line-soft py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
+        <div class="reveal max-w-2xl">
+          <p class="eyebrow">booking_app — deployed, not a mockup</p>
+          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
+            Open it and book a slot.
+          </h2>
+          <p class="mt-6 text-[17px] leading-relaxed text-mist">
+            A multi-tenant booking application — Next.js 15, Supabase with row-level security,
+            one deploy that serves every customer by slug. It was specced issue by issue in
+            Linear and built by the agent crew above; every change went through a review gate.
+            The link below is my own tenant on it. Pick a time and it writes a real row.
+          </p>
+        </div>
+
+        <div class="mt-10 grid gap-6 lg:grid-cols-[1fr_0.85fr] lg:items-start">
+          <div class="reveal min-w-0 rounded-md border border-amber/50 bg-panel p-6 shadow-[0_0_40px_-18px_rgba(255,178,36,0.4)]">
+            <p class="font-mono text-[13px] tracking-wider text-amber uppercase">live · try it</p>
+            <p class="mt-4 font-mono text-[13px] break-all text-chalk">booking.aligncompass.com/pedroestevez</p>
+            <div class="mt-6 flex flex-wrap items-center gap-4">
+              <a
+                href={bookingUrl}
+                rel="noopener"
+                target="_blank"
+                class="cta-primary inline-flex min-h-11 items-center rounded-sm bg-amber px-6 py-4 font-mono text-sm font-semibold text-harbor"
+              >book_a_slot ↗</a>
+              <a
+                href={bookingRepoUrl}
+                rel="noopener"
+                target="_blank"
+                class="inline-flex min-h-11 items-center rounded-sm border border-line px-6 py-4 font-mono text-sm font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
+              >read_the_source ↗</a>
+            </div>
+          </div>
+
+          <!-- What's real and what isn't — the same answer the app's own
+               confirmation screen gives, so the two can never contradict. -->
+          <aside aria-label="What is and isn't wired" class="reveal min-w-0 rounded-md border border-line bg-panel-2/90 p-6">
+            <p class="font-mono text-[13px] text-dim">// status, stated plainly</p>
+            <p class="mt-4 font-mono text-[13px] tracking-wider text-delta uppercase">wired</p>
+            <ul class="mt-3 space-y-2">
+              {bookingWired.map((item) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-mist">
+                  <span aria-hidden="true" class="mt-2 h-px w-3 shrink-0 bg-delta"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-6 font-mono text-[13px] tracking-wider text-dim uppercase">not yet</p>
+            <ul class="mt-3 space-y-2">
+              {bookingNotWired.map((item) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-dim">
+                  <span aria-hidden="true" class="mt-2 h-px w-3 shrink-0 bg-line"></span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-6 border-t border-line-soft pt-4 font-mono text-[13px] leading-relaxed text-dim">
+              // the confirmation screen says the same thing — if you book, it tells you
+              outright that no email went out and nobody was notified
+            </p>
           </aside>
         </div>
       </div>
