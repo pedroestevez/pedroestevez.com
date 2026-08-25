@@ -19,10 +19,10 @@ const bookingWired = [
   'Postgres with row-level security — every row scoped by customer_id',
   'Live availability from weekly rules, in the tenant\'s timezone',
   'A real booking row, held slot, and .ics calendar invite',
+  'Confirmation email to the guest, and a copy to whoever owns the calendar',
   'Multi-tenant by slug — one deploy serves every customer',
 ];
 const bookingNotWired = [
-  'Confirmation emails — no provider key, so nobody is notified yet',
   'Online payment — Stripe is the next release',
 ];
 
@@ -643,8 +643,8 @@ const services = [
               ))}
             </ul>
             <p class="mt-6 border-t border-line-soft pt-4 font-mono text-[13px] leading-relaxed text-dim">
-              // the confirmation screen says the same thing — if you book, it tells you
-              outright that no email went out and nobody was notified
+              // the confirmation screen says the same thing — book a slot and it names the
+              address the confirmation was sent to, and says payment isn't wired yet
             </p>
           </aside>
         </div>
