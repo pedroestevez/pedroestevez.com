@@ -3,28 +3,10 @@ import Layout from '../layouts/Layout.astro';
 
 const email = 'pedroestevez001@gmail.com';
 const repoUrl = 'https://github.com/pedroestevez/pedroestevez.com';
-const hireMailto = `mailto:${email}?subject=${encodeURIComponent('Hiring inquiry — Business Analyst role')}`;
-const quoteMailto = (svc: string) =>
-  `mailto:${email}?subject=${encodeURIComponent(`Quote request — ${svc}`)}`;
-
-// The booking app — a separate, multi-tenant Next.js + Supabase application,
-// deployed once and addressed per tenant by slug. This site links to it; it is
-// not embedded here.
 const bookingUrl = 'https://booking.pedroestevez.com';
-const bookingRepoUrl = 'https://github.com/pedroestevez/Booking-Platform';
-
-// Stated plainly, and kept in step with what the app's own confirmation screen
-// says after a booking. A demo that overclaims is worse than one that doesn't.
-const bookingWired = [
-  'Postgres with row-level security — every row scoped by customer_id',
-  'Live availability from weekly rules, in the tenant\'s timezone',
-  'A real booking row, held slot, and .ics calendar invite',
-  'Confirmation email to the guest, and a copy to whoever owns the calendar',
-  'Multi-tenant by slug — one deploy serves every customer',
-];
-const bookingNotWired = [
-  'Online payment — Stripe is the next release',
-];
+const bookingRepoUrl = 'https://github.com/pedroestevez/booking-platform';
+const engineRepoUrl = 'https://github.com/pedroestevez/development-engine-seed';
+const hireMailto = `mailto:${email}?subject=${encodeURIComponent('Hiring inquiry: AI Workflow & Automation')}`;
 
 // Quoted character-exact from src/layouts/Layout.astro:44-53 (leading indentation
 // normalised). Rendered in a <pre> — do not reformat.
@@ -39,7 +21,7 @@ const posthogSnippet = `window.posthog.init(phKey, {
   autocapture: true,
 });`;
 
-// Excerpted from docs/ENGINE.md §4 (Development-Engine-Seed) — a spec Pedro wrote.
+// Quoted from docs/ENGINE.md §4 in the public Development-Engine-Seed repo.
 const routingSpec =
   'Model selection: model = max(points-tier, risk-tier). A 1-point payments task still ' +
   'routes to Opus, runs the security pass, and gets stricter acceptance criteria. Risk ' +
@@ -48,190 +30,158 @@ const routingSpec =
 
 const nav = [
   { href: '#about', label: 'about' },
-  { href: '#experience', label: 'experience' },
-  { href: '#skills', label: 'skills' },
-  { href: '#ai', label: 'ai_projects' },
   { href: '#booking', label: 'booking_app' },
-  { href: '#services', label: 'services' },
+  { href: '#engine', label: 'engine' },
+  { href: '#pipeline', label: 'pipeline' },
+  { href: '#adoption', label: 'adoption' },
+  { href: '#lineage', label: 'lineage' },
   { href: '#contact', label: 'contact' },
 ];
 
 const stats = [
-  { value: '$20K', unit: '/yr', label: 'invoicing automation savings' },
+  { value: '459', unit: 'tests', label: 'booking platform · 0 skipped' },
+  { value: '$20K', unit: '/yr', label: 'invoicing cost eliminated' },
+  { value: '300', unit: 'trained', label: 'GCP enablement · 16-seat cohorts' },
   { value: '$15K', unit: '/yr', label: 'at-risk contract rescued' },
-  { value: '$5K', unit: '/yr', label: 'logistics cost removed' },
-  { value: '8+', unit: 'yrs', label: 'business analysis' },
-  { value: '3', unit: 'langs', label: 'EN · ES · PT fluent' },
+  { value: '≈88', unit: 'min', label: 'brief to deployed site · measured once' },
 ];
 
 // About panel — real shipped artifacts, not process steps.
 const shipped = [
   {
+    name: 'booking.pedroestevez.com',
+    detail: 'live · book a real slot · 459 tests pass, 0 skipped · public repo',
+  },
+  {
+    name: 'Development Engine',
+    detail: 'an agent crew ships a Linear backlog through two human gates · public repo',
+  },
+  {
     name: 'pedroestevez.com',
-    detail: 'Astro 5 + Tailwind 4, first version in one prompt',
+    detail: 'this site, built through the six-stage pipeline · source public',
   },
   {
-    name: 'Development Engine — an agentic build crew',
-    detail:
-      'specced by me — two human gates: no engine change merges without me, no work runs outside an approved cycle',
-  },
-  {
-    name: 'Org-wide ERD + company-wide data strategy',
-    detail: 'United Data Technologies',
-  },
-  {
-    name: 'Selenium extraction pipelines + SQL analysis',
-    detail: 'Wythe Capital Trust',
+    name: 'Multi-language legal-compliance system',
+    detail: 'Excel/VBA + Power Query · Subway supply chain, 20,000+ restaurants',
   },
 ];
 
-const experience = [
+const bookingWired = [
+  'Postgres row-level security · every row scoped by customer_id',
+  'Live availability from weekly rules, in the tenant’s timezone',
+  'A real booking row, a held slot, and a .ics calendar invite',
+  'Confirmation email to the guest, and a copy to whoever owns the calendar',
+  'Multi-tenant by slug · one deploy serves every tenant',
+];
+
+const engineRuns = [
+  'Builds the backlog under six seats: build, review, plan, research, spec, security',
+  'Routes every issue by model = max(points-tier, risk-tier)',
+  'Caught 11 errors that humans made or approved',
+];
+
+const engineNotWithout = [
+  'Direction. No work runs that I have not approved up front.',
+  'Merges. Every change lands through my review; branch protection turned away the crew’s own push.',
+  'What done means. The acceptance criteria the crew builds to are mine.',
+];
+
+const pipelineStages = [
+  { num: '01', name: 'offer_design' },
+  { num: '02', name: 'brand_narrative' },
+  { num: '03', name: 'services_articulation' },
+  { num: '04', name: 'conversion_copy · in parallel with 05' },
+  { num: '05', name: 'art_direction · in parallel with 04' },
+  { num: '06', name: 'build' },
+];
+
+const craft = [
+  'reframing what stakeholders ask for into what they need',
+  'requirements at business, functional, and field level',
+  'BPMN-style as-is and to-be mapping · drill only into the bottlenecks',
+  'UAT and acceptance with the people who will live with the system',
+];
+
+const lineage = [
   {
-    dates: '2026.04 — 2026.07',
-    company: 'Florida Power & Light',
-    role: 'Business Analyst II · Contract',
-    chips: ['GCP', 'Power Automate'],
-    points: [
-      'Led a GCP adoption enablement program built from scratch, coordinating training across teams — recognized by management inside a three-month engagement.',
-      'Automated the program’s own workflows with Power Automate.',
-    ],
-  },
-  {
-    dates: '2024.04 — 2026.03',
-    company: 'United Data Technologies',
-    role: 'Business Analyst',
-    chips: ['−$20K/yr', '+$15K/yr', '−$5K/yr'],
-    points: [
-      'Automated customer invoicing for an entire business unit — SQL integration feeding Power BI paginated reports, logic proven in an Excel prototype first. Eliminated $20K/yr in manual cost.',
-      'Rescued a $15K/yr at-risk contract with a rapid-turnaround Power BI dashboard.',
-      'Authored the company-wide data strategy roadmap and the org-wide ERD.',
-      'Redesigned reverse-logistics routing, removing $5K/yr in cost.',
-    ],
-  },
-  {
-    dates: '2019.05 — 2024.02',
-    company: 'Independent Purchasing Cooperative',
-    role: 'Three roles · Subway supply chain',
-    chips: ['Excel/VBA', 'Tableau', 'MDM'],
-    points: [
-      'Business Data Analyst — automated a multi-language legal-compliance system in Excel/VBA + Power Query, documented end-to-end in Visio.',
-      'Project Manager — led an MDM vendor transition and product-managed the internal PM platform.',
-      'Supply Chain Data Steward — supply chain data SME; automated Tableau reporting.',
-    ],
-  },
-  {
-    dates: '2017.12 — 2019.02',
+    dates: '2017 → 2019',
     company: 'Wythe Capital Trust',
     role: 'Data Analyst',
     chips: ['Selenium', 'SQL'],
+    title: 'Selenium extraction pipelines',
     points: [
-      'Built end-to-end data pipelines with Selenium-automated extraction.',
-      'SQL + statistical analysis to target real-estate leads.',
+      'Selenium-automated extraction pipelines feeding SQL and statistical analysis, built to target real-estate leads.',
+      'The boundary, stated: Salesforce here was data analysis and reporting only. No administration, no configuration, no implementations.',
+    ],
+  },
+  {
+    dates: '2019 → 2024',
+    company: 'Independent Purchasing Cooperative',
+    role: 'Three roles · Subway supply chain',
+    chips: ['Excel/VBA', 'Power Query', 'MDM', 'Tableau'],
+    title: 'A compliance system for 20,000+ restaurants',
+    points: [
+      'A multi-language legal-compliance system built in Excel, VBA, and Power Query, documented end to end in Visio, supporting a franchise network of 20,000+ Subway restaurants.',
+      'Same tenure: an MDM vendor transition with a managed cutover, and automated Tableau reporting.',
+    ],
+  },
+  {
+    dates: '2024 → 2026',
+    company: 'United Data Technologies',
+    role: 'Business Analyst',
+    chips: ['−$20K/yr', '$15K/yr rescued', '−$5K/yr', 'org-wide ERD'],
+    title: 'Invoicing automation that still runs without me',
+    points: [
+      'Customer invoicing for an entire business unit. The logic was proven in an Excel prototype first, then built as a SQL integration feeding Power BI paginated reports. It eliminated $20K a year in manual cost, and it is still running without me. That last clause is the standard I build to, not a footnote.',
+      'Same seat, three more systems: a $15K a year at-risk contract rescued with a rapid Power BI build; a reverse-logistics routing redesign that took out $5K a year; the org-wide ERD and the company-wide data strategy. Three dollar figures, three separate systems.',
+    ],
+  },
+  {
+    dates: '2026',
+    company: 'Florida Power & Light',
+    role: 'Business Analyst II · Contract',
+    chips: ['GCP', 'Power Automate'],
+    title: 'An enablement program built to outlive its builder',
+    points: [
+      'A GCP adoption enablement program built from scratch inside a three-month contract, with the program’s own workflows automated in Power Automate.',
+      'I stood up a community of practice so the program would outlive the engagement. It did. The training numbers are in the adoption section above.',
+    ],
+  },
+  {
+    dates: '2023 → now',
+    company: 'LLMs',
+    role: '',
+    chips: ['Claude Code', 'agent crew', '459 tests'],
+    title: 'Then the agent systems',
+    points: [
+      'LLMs arrive on this line in 2023, and this page does not stretch that in either direction.',
+      'What changed is what a written requirement can become. The systems since: the Development Engine, an agent crew that ships a Linear backlog behind two human gates, both held by me; the booking platform that crew built, live with 459 automated tests passing; the website pipeline, discovery brief in, deployed Astro site out; and a daily operations layer of four scheduled agent routines. Each has its own section on this page, limits included.',
     ],
   },
 ];
 
 const skillGroups = [
   {
+    name: 'Automation & AI',
+    items: ['Claude / Claude Code', 'Agentic system design', 'Power Automate', 'Selenium'],
+  },
+  {
     name: 'Programming & Data',
+    items: ['SQL (expert)', 'Python', 'Excel (expert)', 'Power Query', 'VBA'],
+  },
+  {
+    name: 'BI & Data',
     items: [
-      'SQL — expert',
-      'Python — scripting & data pipelines',
-      'Selenium — automated extraction pipelines',
+      'Power BI, incl. paginated reports',
+      'Tableau',
       'Data modeling & ERDs',
+      'MDM',
       'Data governance',
     ],
   },
   {
-    name: 'BI & Reporting',
-    items: ['Power BI (incl. paginated reports)', 'Tableau', 'Excel — expert', 'Power Query', 'VBA'],
-  },
-  {
-    name: 'Automation & AI',
-    items: [
-      'Claude / Claude Code — AI-assisted development',
-      'Agentic system design',
-      'Power Automate',
-    ],
-  },
-  {
     name: 'Delivery',
-    items: ['Scrum · Jira · Linear', 'Requirements engineering', 'UAT', 'Process mapping'],
-  },
-];
-
-const services = [
-  {
-    code: 'CLN',
-    name: 'Data Cleanup',
-    price: 'from $400',
-    desc: 'One messy dataset in, one trustworthy dataset out.',
-    entry: 'start here — the low-commitment way to see how I work',
-    points: [
-      'Duplicate removal & missing-value review',
-      'Formatting fixes & category standardization',
-      'Validation checks across the full file',
-      'Cleaned Excel/CSV + summary of corrections',
-    ],
-  },
-  {
-    code: 'ANQ',
-    name: 'Business Question Analysis',
-    price: 'from $750',
-    desc: 'One clearly defined question, answered end-to-end on one dataset.',
-    points: [
-      'Data prep + exploratory analysis',
-      'Key calculations behind the answer',
-      'Up to 5 visualizations',
-      'Written findings summary',
-    ],
-  },
-  {
-    code: 'DSH',
-    name: 'Interactive Dashboard',
-    price: 'from $1,200',
-    desc: 'Power BI, Tableau, Looker Studio, or Excel — your stack.',
-    points: [
-      'Designed dashboard with basic filters',
-      '1 revision round included',
-      'Usage guide + virtual walkthrough',
-    ],
-  },
-  {
-    code: 'REC',
-    name: 'Insights & Recommendations',
-    price: 'from $500',
-    priceNote: 'as an add-on to any analysis',
-    desc: 'Turn a completed analysis into decisions leadership can act on.',
-    points: [
-      'Executive summary',
-      'Prioritized recommendations',
-      'Risks & next steps',
-    ],
-  },
-  {
-    code: 'URG',
-    name: 'Urgent Investigation',
-    price: 'from $750',
-    desc: 'Something unexpected broke, or the question can’t wait.',
-    points: [
-      'Focused consultation on the problem',
-      'Up to 2 datasets investigated',
-      'Findings document + virtual presentation',
-      'Larger scope? Quoted as a second phase — never hourly',
-    ],
-  },
-  {
-    code: 'FUL',
-    name: 'Complete Business Insights',
-    price: '$2,500',
-    priceNote: 'with dashboard — from $3,500',
-    desc: 'The full loop: clean, analyze, recommend.',
-    points: [
-      'Cleaning of a primary dataset',
-      'Up to 3 business questions answered',
-      'Executive report + prioritized recommendations',
-    ],
+    items: ['Requirements engineering', 'Process mapping (Miro / Visio)', 'UAT', 'Scrum · Jira · Linear'],
   },
 ];
 ---
@@ -243,11 +193,11 @@ const services = [
       <a href="#top" class="-ml-2 inline-flex min-h-11 items-center gap-2 px-2 font-display text-[17px] tracking-tight text-chalk">
         PE<span aria-hidden="true" class="inline-block h-4 w-2 bg-amber"></span>
       </a>
-      <nav aria-label="Sections" class="hidden items-center gap-6 md:flex">
+      <nav aria-label="Sections" class="hidden items-center gap-5 md:flex">
         {nav.map((n) => (
           <a
             href={n.href}
-            class="inline-flex min-h-11 items-center px-2 font-mono text-[13px] text-mist transition-colors hover:text-amber"
+            class="inline-flex min-h-11 items-center px-1.5 font-mono text-[13px] text-mist transition-colors hover:text-amber"
           >{n.label}</a>
         ))}
       </nav>
@@ -272,12 +222,14 @@ const services = [
             Pedro<br />Estevez<span aria-hidden="true" class="cursor-blink ml-2 inline-block h-[0.72em] w-[0.42em] bg-amber align-baseline"></span>
           </h1>
           <p class="mt-6 font-mono text-sm font-medium tracking-wide text-amber uppercase">
-            Business Analyst · SQL · Python · AI Automation
+            AI Workflow &amp; Automation Specialist · built on 8+ yrs of business analysis
           </p>
           <p class="mt-6 max-w-xl text-[17px] leading-relaxed text-mist">
-            I turn messy operations into <span class="text-chalk">systems that run themselves and
-            prove it in dollars</span> — I write the SQL and the Python, design the agents that do
-            the rest, and ship it in the tools your team already runs.
+            You already own the systems. The manual work lives in between them. I close that gap
+            with <span class="text-chalk">agent workflows that build and ship</span>, a
+            <span class="text-chalk">human gate</span> on anything that goes out under your name,
+            and numbers that prove the change held. Eight-plus years of business analysis is how
+            I find the gap in the first place.
           </p>
 
           <div class="mt-8 flex flex-wrap items-center gap-4">
@@ -286,14 +238,14 @@ const services = [
               class="cta-primary inline-flex min-h-11 items-center rounded-sm bg-amber px-6 py-4 font-mono text-sm font-semibold text-harbor"
             >Hire me</a>
             <a
-              href="#services"
+              href="#booking"
               class="inline-flex min-h-11 items-center font-mono text-[13px] text-mist underline-offset-4 transition-colors hover:text-amber hover:underline"
-            >or see fixed-scope data projects ↓</a>
+            >or book a real slot on the live demo ↓</a>
           </div>
 
           <p class="mt-8 inline-flex items-center gap-2 rounded-full border border-delta/40 bg-delta/10 px-4 py-1.5 font-mono text-[13px] text-delta">
             <span class="pulse-dot inline-block h-2 w-2 rounded-full bg-delta"></span>
-            Available immediately — contract or full-time
+            Available immediately · contract or full-time
           </p>
         </div>
 
@@ -302,7 +254,7 @@ const services = [
           <div class="rounded-md border border-line bg-panel-2/90 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)]">
             <div class="flex items-center justify-between gap-4 border-b border-line px-6 py-4">
               <span class="eyebrow">site_telemetry</span>
-              <span class="font-mono text-[13px] text-dim">rev 1.1</span>
+              <span class="font-mono text-[13px] text-dim">rev 2.0</span>
             </div>
             <dl class="divide-y divide-line-soft font-mono text-[13px]">
               <div class="flex min-h-14 items-center justify-between gap-4 px-6">
@@ -310,12 +262,12 @@ const services = [
                 <dd class="text-chalk">Claude Code</dd>
               </div>
               <div class="flex min-h-14 items-center justify-between gap-4 px-6">
-                <dt class="text-dim">initial_prompts</dt>
-                <dd class="text-chalk">1</dd>
+                <dt class="text-dim">pipeline</dt>
+                <dd class="text-amber">brief to deployed · ≈88 min</dd>
               </div>
               <div class="flex min-h-14 items-center justify-between gap-4 px-6">
-                <dt class="text-dim">initial_build</dt>
-                <dd class="text-amber">&lt; 60 min</dd>
+                <dt class="text-dim">booking_app_tests</dt>
+                <dd class="text-chalk">459 pass · 0 skipped</dd>
               </div>
               <div class="flex min-h-14 items-center justify-between gap-4 px-6">
                 <dt class="text-dim">stack</dt>
@@ -344,7 +296,8 @@ const services = [
               </div>
             </dl>
             <p class="border-t border-line px-6 py-4 font-mono text-[13px] text-dim">
-              // this page is the demo — see <a href="#ai" class="text-amber hover:underline">ai_projects</a>
+              // ≈88 min: measured once, a best case · this page came through
+              <a href="#pipeline" class="text-amber hover:underline">the pipeline</a>
             </p>
           </div>
         </aside>
@@ -371,25 +324,30 @@ const services = [
         <div class="reveal">
           <p class="eyebrow">about</p>
           <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
-            Analyst by title.<br />Systems builder by habit.
+            Same job since 2017.<br />The tools finally caught up.
           </h2>
           <div class="mt-6 space-y-4 text-[17px] leading-relaxed text-mist">
             <p>
-              Eight-plus years across <span class="text-chalk">utilities, supply chain, and finance
-              operations</span> — always in the same seat: the person who finds the manual process
-            bleeding money and replaces it with a system that runs itself and proves it with numbers.
+              Eight-plus years of business analysis across <span class="text-chalk">utilities,
+              supply chain, and finance operations</span>, always in the same seat: the person who
+              finds the work still being done by hand and replaces it with a system that keeps
+              running. The invoicing automation that eliminated $20K a year in manual cost
+              <span class="text-chalk">still runs without me</span>. That is the bar every system
+              on this page has to clear.
             </p>
             <p>
-              The pattern is consistent: get the data model and the rules right first —
-              <span class="text-chalk">SQL, ERDs</span>, and whatever prototype proves the logic
-              fastest — then build the system that runs without me, and drive adoption until it
-              sticks. Sometimes that system is a Power BI report. Sometimes it's
-              <span class="text-chalk">a script, a pipeline, or an agent crew</span>.
+              LLMs since 2023. Today that means a <span class="text-chalk">crew of Claude Code
+              agents</span> that ships a Linear backlog I spec, a booking platform that is live on
+              my own domain, and four scheduled routines that run my own operations. Every one of
+              those systems has the same limit built in: nothing merges and nothing goes out under
+              my name without my hand. <span class="text-chalk">Agents draft; I press send.</span>
             </p>
             <p>
-              Now AI-enabled: I build working software with <span class="text-chalk">Claude Code</span> and
-              design <span class="text-chalk">agentic systems</span> that turn well-written requirements
-              directly into shipped tools.
+              One habit underneath all of it: <span class="text-chalk">I don't ask it to do the
+              work, I ask it how the work should be done.</span> Get the rules out of people's
+              heads and into writing before anything runs. That was true of the Excel prototype
+              that proved the invoicing logic first, and it is true of the acceptance criteria the
+              agent crew builds against now.
             </p>
           </div>
         </div>
@@ -408,7 +366,7 @@ const services = [
               ))}
             </ol>
             <div class="mt-6 border-t border-line-soft pt-6">
-              <p class="font-mono text-[13px] tracking-wider text-dim uppercase">languages — fluent</p>
+              <p class="font-mono text-[13px] tracking-wider text-dim uppercase">languages_fluent</p>
               <div class="mt-4 flex gap-2">
                 {['English', 'Español', 'Português'].map((l) => (
                   <span class="rounded-sm border border-line px-3 py-1 font-mono text-[13px] text-mist">{l}</span>
@@ -420,24 +378,407 @@ const services = [
       </div>
     </section>
 
-    <!-- ===== EXPERIENCE ===== -->
-    <section id="experience" class="border-t border-line-soft py-20 sm:py-28">
+    <!-- ===== BOOKING APP ===== -->
+    <section id="booking" class="border-t border-line-soft py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
+        <div class="reveal max-w-2xl">
+          <p class="eyebrow">booking_app · deployed, not a mockup</p>
+          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
+            Open it and book a slot.
+          </h2>
+          <p class="mt-6 text-[17px] leading-relaxed text-mist">
+            A multi-tenant booking application: Next.js 15, React 19, TypeScript strict,
+            Tailwind 4, Supabase Postgres. <span class="text-chalk">Row-level security is enabled
+            and forced on every table</span>, and tenant identity is set server-side, never taken
+            from the browser. One deploy serves every tenant by slug.
+          </p>
+          <p class="mt-4 text-[17px] leading-relaxed text-mist">
+            I am the product owner on this build. It was specced in Linear, with acceptance
+            criteria I wrote; the agent crew in the next section built it; I merged every change.
+            The link below is my own tenant on it.
+            <span class="text-chalk">Pick a time and it writes a real row.</span>
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-4">
+            <a
+              href={bookingUrl}
+              rel="noopener"
+              target="_blank"
+              class="cta-primary inline-flex min-h-11 items-center rounded-sm bg-amber px-6 py-4 font-mono text-sm font-semibold text-harbor"
+            >book_a_slot ↗</a>
+            <a
+              href={bookingRepoUrl}
+              rel="noopener"
+              target="_blank"
+              class="inline-flex min-h-11 items-center rounded-sm border border-line px-6 py-4 font-mono text-sm font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
+            >read_the_source ↗</a>
+          </div>
+        </div>
+
+        <div class="mt-12 grid gap-6 lg:grid-cols-2 lg:items-start">
+          <article class="reveal rounded-md border border-amber/50 bg-panel p-6 shadow-[0_0_40px_-18px_rgba(255,178,36,0.4)]">
+            <p class="font-mono text-[13px] text-dim">// the numbers, and the test that tries to break them</p>
+            <div class="mt-4 flex flex-wrap gap-1.5">
+              {['459 tests passing', '0 skipped', '28 RLS policies', 'all 7 tables isolated'].map((c) => (
+                <span class="rounded-sm border border-line px-2 py-0.5 font-mono text-[13px] text-mist">{c}</span>
+              ))}
+            </div>
+            <p class="mt-5 text-sm leading-relaxed text-mist">
+              459 green tests only matter if they can go red. So the claim itself got tested:
+              <span class="text-chalk">revert the tenant-isolation migration and 29 of 44
+              isolation tests fail.</span> Drop a single policy and 3 of 3 tests for that table
+              fail. That was tested, not assumed.
+            </p>
+          </article>
+
+          <article class="reveal rounded-md border border-line bg-panel p-6">
+            <p class="font-mono text-[13px] text-dim">// status, stated plainly</p>
+            <p class="mt-4 font-mono text-[13px] font-semibold tracking-wider text-delta uppercase">wired</p>
+            <ul class="mt-3 space-y-2">
+              {bookingWired.map((w) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-mist">
+                  <span aria-hidden="true" class="mt-[0.55em] h-px w-4 flex-none bg-delta/70"></span>
+                  <span>{w}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-5 font-mono text-[13px] font-semibold tracking-wider text-amber uppercase">not yet</p>
+            <ul class="mt-3 space-y-2">
+              <li class="flex gap-3 text-sm leading-relaxed text-mist">
+                <span aria-hidden="true" class="mt-[0.55em] h-px w-4 flex-none bg-amber/70"></span>
+                <span>Online payment. The Stripe Connect (Express) code is merged in the repo; the public demo is not payment-enabled.</span>
+              </li>
+            </ul>
+            <p class="mt-5 border-t border-line-soft pt-4 font-mono text-[13px] text-dim">
+              // book a slot and check: the row is real, and no payment is taken.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DEVELOPMENT ENGINE ===== -->
+    <section id="engine" class="border-t border-line-soft bg-panel-2/40 py-20 sm:py-28">
       <div class="mx-auto max-w-6xl px-6 sm:px-8">
         <div class="reveal">
-          <p class="eyebrow">experience</p>
-          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">The track record</h2>
+          <p class="eyebrow">development_engine · public repo</p>
+          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
+            The crew that built the booking app.
+          </h2>
+        </div>
+        <div class="mt-12 grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-start">
+          <div class="min-w-0 space-y-8">
+            <p class="reveal text-[17px] leading-relaxed text-mist">
+              A crew of Claude Code agents ships a Linear backlog under separate seats: builder,
+              reviewer, planner, researcher, spec, security. I hold the two human gates.
+              <span class="text-chalk">I approve direction before any work starts, and I merge
+              every change at the end.</span> Nothing reaches main any other way.
+            </p>
+
+            <div class="reveal border-l-2 border-amber/70 pl-6">
+              <p class="font-mono text-[13px] tracking-wider text-dim uppercase">// gate two is enforced, not promised</p>
+              <p class="mt-3 text-sm leading-relaxed text-mist">
+                Branch protection, verified live: a direct push from the crew's own credentials
+                was rejected (GH013). The merge gate is not a promise;
+                <span class="text-chalk">it is a push the repo already refused.</span>
+              </p>
+            </div>
+
+            <div class="reveal border-l-2 border-line pl-6">
+              <p class="font-mono text-[13px] tracking-wider text-dim uppercase">audit · 151 issues</p>
+              <div class="mt-3 flex flex-wrap gap-1.5">
+                {['11 vs 4', '28 of 28', '26 min median'].map((c) => (
+                  <span class="rounded-sm border border-line px-2 py-0.5 font-mono text-[13px] text-mist">{c}</span>
+                ))}
+              </div>
+              <p class="mt-4 text-sm leading-relaxed text-mist">
+                A hostile audit of all 151 issues on the engine's board produced two findings.
+                The agents caught 11 errors that humans made or approved; I caught 4. And spec
+                details that prescribed the implementation with confidence were wrong 28 times,
+                while <span class="text-chalk">specs that stated the end state survived 28 of
+                28</span>. The specs now state what done looks like; the crew picks the route.
+                Median issue execution: 26 minutes.
+              </p>
+            </div>
+
+            <div class="reveal grid gap-6 sm:grid-cols-2">
+              <div class="rounded-md border border-line bg-panel p-5">
+                <p class="font-mono text-[13px] font-semibold tracking-wider text-delta uppercase">// runs without me</p>
+                <ul class="mt-3 space-y-2">
+                  {engineRuns.map((r) => (
+                    <li class="flex gap-2 text-[13px] leading-relaxed text-mist">
+                      <span aria-hidden="true" class="mt-[0.5em] h-px w-3.5 flex-none bg-delta/70"></span>
+                      <span>{r}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div class="rounded-md border border-line bg-panel p-5">
+                <p class="font-mono text-[13px] font-semibold tracking-wider text-amber uppercase">// not without me</p>
+                <ul class="mt-3 space-y-2">
+                  {engineNotWithout.map((r) => (
+                    <li class="flex gap-2 text-[13px] leading-relaxed text-mist">
+                      <span aria-hidden="true" class="mt-[0.5em] h-px w-3.5 flex-none bg-amber/70"></span>
+                      <span>{r}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <aside aria-label="Inspectable artifact" class="reveal min-w-0 lg:sticky lg:top-24">
+            <div class="rounded-md border border-line bg-panel-2/90 p-6 shadow-[0_0_40px_-18px_rgba(255,178,36,0.4)]">
+              <p class="font-mono text-[13px] text-dim">spec · docs/ENGINE.md §4 · model routing</p>
+              <p class="mt-4 border-l-2 border-line pl-4 font-mono text-[13px] leading-relaxed text-chalk">
+                {routingSpec}
+              </p>
+              <p class="mt-4 font-mono text-[13px] text-dim">
+                // from a spec I wrote ·
+                <a
+                  href={engineRepoUrl}
+                  rel="noopener"
+                  target="_blank"
+                  class="text-amber hover:underline"
+                >the repo is public, read the rest ↗</a>
+              </p>
+              <p class="mt-6 border-t border-line-soft pt-5 font-mono text-[13px] text-dim">
+                Linear specs → agent crew → review gate → shipped
+              </p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SITE PIPELINE ===== -->
+    <section id="pipeline" class="border-t border-line-soft py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
+        <div class="reveal">
+          <p class="eyebrow">site_pipeline · this site came through it</p>
+          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
+            Discovery brief in.<br />Deployed site out.
+          </h2>
+        </div>
+        <div class="mt-12 grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-start">
+          <div class="min-w-0 space-y-8">
+            <p class="reveal text-[17px] leading-relaxed text-mist">
+              Six stages sit between the discovery brief and the deployed Astro site, each
+              packaged as an agent skill with <span class="text-chalk">quality gates inside</span>:
+              offer design, brand narrative, services articulation, conversion copy and art
+              direction in parallel, then build.
+            </p>
+            <div class="reveal rounded-md border border-line bg-panel p-6">
+              <ol class="space-y-3 font-mono text-sm">
+                {pipelineStages.map((s) => (
+                  <li class="flex items-baseline gap-3">
+                    <span class="flex-none text-amber">{s.num}</span>
+                    <span class="text-mist">{s.name}</span>
+                  </li>
+                ))}
+              </ol>
+              <p class="mt-5 border-t border-line-soft pt-4 font-mono text-[13px] text-dim">
+                // discovery brief → 01..06 → deployed Astro site
+              </p>
+            </div>
+            <div class="reveal border-l-2 border-amber/70 pl-6">
+              <p class="font-mono text-[13px] tracking-wider text-dim uppercase">measured_time</p>
+              <p class="mt-3 font-display text-3xl tracking-tight text-amber">
+                ≈88 min<span class="ml-2 font-mono text-sm font-medium text-dim">discovery brief to deployed site</span>
+              </p>
+              <p class="mt-3 text-sm leading-relaxed text-mist">
+                Measured once. A best case that actually happened, not an average. One run is one
+                data point.
+              </p>
+            </div>
+            <p class="reveal text-sm leading-relaxed text-mist">
+              <span class="font-mono text-[13px] tracking-wider text-amber uppercase">proof · public&ensp;</span>
+              This site came through the pipeline. Several customer sites have shipped through it
+              as well; those builds are public on
+              <a href="https://github.com/pedroestevez" rel="noopener" target="_blank" class="text-chalk underline-offset-4 hover:text-amber hover:underline">my GitHub</a>.
+            </p>
+          </div>
+
+          <aside aria-label="Inspectable source" class="reveal min-w-0 lg:sticky lg:top-24">
+            <div class="rounded-md border border-line bg-panel-2/90 p-6">
+              <p class="font-mono text-[13px] text-dim">source · src/layouts/Layout.astro:44-53</p>
+              <pre class="artifact-pre mt-4 overflow-x-auto border-l-2 border-amber/70 pl-4 font-mono text-[13px] leading-relaxed text-chalk"><code>{posthogSnippet}</code></pre>
+              <p class="mt-4 font-mono text-[13px] text-dim">
+                // <a
+                  href={repoUrl}
+                  rel="noopener"
+                  target="_blank"
+                  class="text-amber hover:underline"
+                >verbatim from this page's source ↗</a>
+              </p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ADOPTION ===== -->
+    <section id="adoption" class="border-t border-line-soft bg-panel-2/40 py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
+        <div class="reveal max-w-2xl">
+          <p class="eyebrow">adoption</p>
+          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
+            Shipped is not adopted.
+          </h2>
+          <p class="mt-6 text-[17px] leading-relaxed text-mist">
+            Building the automation is the demo. Getting it adopted by
+            <span class="text-chalk">the people whose work it changes</span> is the job. That is
+            work I have real experience in. Here it is with numbers on it.
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-6 lg:grid-cols-2 lg:items-start">
+          <article class="reveal rounded-md border border-line bg-panel p-6">
+            <p class="font-mono text-[13px] tracking-wider text-dim uppercase">enablement program · built from scratch</p>
+            <p class="mt-2 font-mono text-[13px] text-dim">Florida Power &amp; Light · Business Analyst II · contract · 2026</p>
+            <div class="mt-3 flex flex-wrap gap-1.5">
+              {['300 trained', '16-seat cohorts', 'GCP', 'Power Automate'].map((c) => (
+                <span class="rounded-sm border border-line px-2 py-0.5 font-mono text-[13px] text-mist">{c}</span>
+              ))}
+            </div>
+            <h3 class="mt-4 text-xl font-bold text-chalk">300 people, 16 seats at a time</h3>
+            <p class="mt-3 text-sm leading-relaxed text-mist">
+              I built FPL's GCP adoption enablement program from scratch and trained 300 people
+              through it, in 16-seat cohorts, inside a three-month contract. Alongside the
+              training I stood up a community of practice, so the program would keep running
+              after I left. <span class="text-chalk">It did.</span> The program also took its own
+              advice: I automated its internal workflows with Power Automate. Management
+              recognized the program before the three months were up.
+            </p>
+            <p class="mt-4 border-t border-line-soft pt-4 font-mono text-[13px] text-dim">
+              // the limit, stated: the community outlived the engagement. No claim beyond that point.
+            </p>
+          </article>
+
+          <article class="reveal rounded-md border border-line bg-panel p-6">
+            <p class="font-mono text-[13px] tracking-wider text-dim uppercase">change resistance · relationship first</p>
+            <p class="mt-2 font-mono text-[13px] text-dim">United Data Technologies · Business Analyst · 2024 → 2026</p>
+            <div class="mt-3 flex flex-wrap gap-1.5">
+              <span class="rounded-sm border border-delta/40 bg-delta/10 px-2 py-0.5 font-mono text-[13px] text-delta">−$5K/yr</span>
+            </div>
+            <h3 class="mt-4 text-xl font-bold text-chalk">The $5K that was won on the relationship</h3>
+            <p class="mt-3 text-sm leading-relaxed text-mist">
+              A reverse-logistics routing redesign at UDT removed $5K a year. The process owner
+              resisted the change. What won them over was not the analysis.
+              <span class="text-chalk">I led with the relationship</span>, and the redesign
+              shipped with the owner behind it, not overruled.
+            </p>
+            <p class="mt-4 border-t border-line-soft pt-4 font-mono text-[13px] text-dim">
+              // $5K a year, the smallest saving on this page. The resistance is why it earns the space.
+            </p>
+          </article>
+        </div>
+
+        <div class="reveal mt-6 rounded-md border border-line bg-panel p-6">
+          <p class="font-mono text-[13px] text-dim">// the craft underneath</p>
+          <ul class="mt-4 grid gap-2.5 sm:grid-cols-2">
+            {craft.map((c) => (
+              <li class="flex gap-2 text-sm leading-snug text-mist">
+                <span aria-hidden="true" class="mt-[0.45em] h-1 w-1 flex-none rounded-full bg-amber/70"></span>
+                <span>{c}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== OPS LAYER ===== -->
+    <section id="ops" class="border-t border-line-soft py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
+        <div class="reveal max-w-2xl">
+          <p class="eyebrow">ops_layer · my actual accounts, not a demo</p>
+          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
+            Four routines run my week.<br />None of them presses send.
+          </h2>
+          <p class="mt-6 text-[17px] leading-relaxed text-mist">
+            The systems above ship software. This one runs my working life: inbox, calendar, task
+            boards, and the record of what I know. <span class="text-chalk">Four scheduled agent
+            routines</span> work that layer, and all four stop at the same line. Between them they
+            read, reconcile, flag, and draft. <span class="text-chalk">I press send.</span>
+          </p>
+        </div>
+
+        <div class="mt-12 grid gap-6 lg:grid-cols-3">
+          <article class="reveal rounded-md border border-line bg-panel p-6">
+            <p class="font-mono text-[13px] tracking-wider text-amber uppercase">routine · daily_sweep</p>
+            <p class="mt-4 text-sm leading-relaxed text-mist">
+              Every day, an agent reconciles Gmail, Calendar, and Todoist against each other.
+              Anything inbound with a clock on it gets flagged. Any board that disagrees with the
+              inbox gets corrected.
+            </p>
+            <p class="mt-4 border-t border-line-soft pt-4 font-mono text-[13px] leading-relaxed text-dim">
+              // why this one exists: a reply window once slipped three days and cost a live
+              opportunity. Now a routine watches the clock instead of my memory.
+            </p>
+          </article>
+          <article class="reveal rounded-md border border-line bg-panel p-6">
+            <p class="font-mono text-[13px] tracking-wider text-amber uppercase">gate · draft_only</p>
+            <p class="mt-4 text-sm leading-relaxed text-mist">
+              Agents draft complete: emails, applications, filings, written end to end and parked.
+              I read, I press send. <span class="text-chalk">Nothing goes out under my name
+              without my hand on it.</span>
+            </p>
+          </article>
+          <article class="reveal rounded-md border border-line bg-panel p-6">
+            <p class="font-mono text-[13px] tracking-wider text-amber uppercase">memory · the_vault</p>
+            <p class="mt-4 text-sm leading-relaxed text-mist">
+              Under all of it is an Obsidian vault the agents read and write mid-task, under
+              provenance rules: every note carries who wrote it and whether it was verified, and
+              every fact has one home that everything else links to.
+              <span class="text-chalk">Agent memory that can be audited.</span>
+            </p>
+          </article>
+        </div>
+
+        <div class="reveal mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <p class="font-mono text-[13px] tracking-wider text-dim uppercase">daily_tools</p>
+          <div class="flex flex-wrap gap-2">
+            {['Claude / Claude Code', 'ChatGPT', 'Perplexity', 'Grok'].map((t) => (
+              <span class="rounded-sm border border-line px-3 py-1 font-mono text-[13px] text-mist">{t}</span>
+            ))}
+          </div>
+        </div>
+        <p class="reveal mt-6 font-mono text-[13px] leading-relaxed text-dim">
+          // what this layer deliberately does not do: send. No agent mails, submits, or files
+          anything under my name. Drafts wait for my hand. That is the design, not a gap.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== LINEAGE ===== -->
+    <section id="lineage" class="border-t border-line-soft bg-panel-2/40 py-20 sm:py-28">
+      <div class="mx-auto max-w-6xl px-6 sm:px-8">
+        <div class="reveal max-w-2xl">
+          <p class="eyebrow">lineage · 2017 → now</p>
+          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
+            Automation since 2017.<br />LLMs since 2023.
+          </h2>
+          <p class="mt-6 text-[17px] leading-relaxed text-mist">
+            This is not a job history. It is one line of systems, 2017 to now, and the habit is
+            the same the whole way down: build the thing so it
+            <span class="text-chalk">runs without me</span>. Employers, titles, and dates ride
+            along as metadata. Where I know what happened to a system after I left, the entry says
+            so. Where I do not, it stays quiet.
+          </p>
         </div>
         <div class="mt-12 space-y-0">
-          {experience.map((job) => (
+          {lineage.map((entry) => (
             <article class="reveal group grid gap-3 border-t border-line-soft py-8 last:border-b md:grid-cols-[190px_1fr] md:gap-10">
               <div class="font-mono text-[13px] text-dim">
-                <p class="text-amber">{job.dates}</p>
-                <div class="mt-2 flex flex-wrap gap-1.5 md:flex-col md:items-start">
-                  {job.chips.map((c) => (
+                <p class="text-amber">{entry.dates}</p>
+                <p class="mt-1 text-mist">{entry.company}</p>
+                {entry.role && <p class="mt-0.5">{entry.role}</p>}
+                <div class="mt-3 flex flex-wrap gap-1.5 md:flex-col md:items-start">
+                  {entry.chips.map((c) => (
                     <span
                       class:list={[
                         'rounded-sm border px-2 py-0.5 text-[13px]',
-                        /^[−+]\$/.test(c)
+                        /^[−+]?\$/.test(c)
                           ? 'border-delta/40 bg-delta/10 text-delta'
                           : 'border-line text-mist',
                       ]}
@@ -446,12 +787,9 @@ const services = [
                 </div>
               </div>
               <div>
-                <h3 class="text-xl font-bold text-chalk">
-                  {job.company}
-                  <span class="ml-2 font-mono text-sm font-normal text-mist">· {job.role}</span>
-                </h3>
+                <h3 class="text-xl font-bold text-chalk">{entry.title}</h3>
                 <ul class="mt-4 space-y-2.5">
-                  {job.points.map((p) => (
+                  {entry.points.map((p) => (
                     <li class="flex gap-3 text-sm leading-relaxed text-mist">
                       <span aria-hidden="true" class="mt-[0.55em] h-px w-4 flex-none bg-amber/70"></span>
                       <span>{p}</span>
@@ -462,11 +800,14 @@ const services = [
             </article>
           ))}
         </div>
+        <p class="reveal mt-8 font-mono text-[13px] text-dim">
+          // employers are metadata. systems are the record.
+        </p>
       </div>
     </section>
 
     <!-- ===== SKILLS ===== -->
-    <section id="skills" class="border-t border-line-soft bg-panel-2/40 py-20 sm:py-28">
+    <section id="skills" class="border-t border-line-soft py-20 sm:py-28">
       <div class="mx-auto max-w-6xl px-6 sm:px-8">
         <div class="reveal">
           <p class="eyebrow">skills</p>
@@ -487,23 +828,26 @@ const services = [
             </div>
           ))}
         </div>
+        <p class="reveal mt-6 font-mono text-[13px] text-dim">
+          // dates: LLMs since 2023 · SQL and Selenium since 2017
+        </p>
         <div class="reveal mt-6 grid gap-6 sm:grid-cols-2">
           <div class="rounded-md border border-line bg-panel p-6">
             <h3 class="font-mono text-[13px] font-semibold tracking-wider text-amber uppercase">Credentials</h3>
             <p class="mt-4 text-sm leading-relaxed text-mist">
-              BBA, Management Information Systems — Florida International University
+              BBA, Management Information Systems, Florida International University
             </p>
             <p class="mt-2 font-mono text-[13px] leading-relaxed text-dim">
               Project Management MicroMasters (RIT) ·
-              <span class="text-mist">Certified Scrum Product Owner — in progress</span>
+              <span class="text-mist">Certified Scrum Product Owner, completed Aug 2026</span>
             </p>
           </div>
           <div class="rounded-md border border-line bg-panel p-6">
             <h3 class="font-mono text-[13px] font-semibold tracking-wider text-amber uppercase">Source &amp; systems</h3>
             <p class="mt-4 text-sm leading-relaxed text-mist">
               This page: Astro 5 + Tailwind 4, cookieless analytics behind a same-origin proxy,
-              every motion gated on prefers-reduced-motion. The source of this page is public —
-              the build, the analytics config, the motion gating.
+              every motion gated on prefers-reduced-motion. The source is public: the build, the
+              analytics config, the motion gating.
             </p>
             <a
               href={repoUrl}
@@ -516,203 +860,22 @@ const services = [
       </div>
     </section>
 
-    <!-- ===== AI PROJECTS ===== -->
-    <section id="ai" class="border-t border-line-soft py-20 sm:py-28">
-      <div class="mx-auto max-w-6xl px-6 sm:px-8">
-        <div class="reveal">
-          <p class="eyebrow">ai_projects</p>
-          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
-            Requirements in.<br />Working software out.
-          </h2>
-        </div>
-        <div class="mt-12 grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-start">
-          <!-- left: stacked write-ups, no uniform card grid -->
-          <div class="min-w-0 space-y-10">
-            <article class="reveal border-l-2 border-amber/70 pl-6">
-              <p class="font-mono text-[13px] tracking-wider text-dim uppercase">agentic system · human-gated</p>
-              <h3 class="mt-4 text-xl font-bold text-chalk">Software that builds itself from agile specs</h3>
-              <p class="mt-4 text-sm leading-relaxed text-mist">
-                I designed the crew and the rules it runs on: roles, model routing
-                (<code class="font-mono text-[13px] text-chalk">model = max(points-tier, risk-tier)</code>),
-                two human gates, and file-overlap clustering that decides what can run in parallel.
-                I write the specs in Linear; the crew executes them; nothing merges without my
-                review. The requirements discipline of a Business Analyst, executed at machine speed.
-              </p>
-              <p class="mt-6 font-mono text-[13px] text-dim">
-                Linear specs → agent crew → review gate → shipped
-              </p>
-            </article>
-            <article class="reveal rounded-md border border-amber/50 bg-panel p-6 shadow-[0_0_40px_-18px_rgba(255,178,36,0.4)]">
-              <p class="font-mono text-[13px] tracking-wider text-amber uppercase">live proof · you're looking at it</p>
-              <h3 class="mt-4 text-xl font-bold text-chalk">Functional websites in under an hour</h3>
-              <p class="mt-4 text-sm leading-relaxed text-mist">
-                One structured prompt into Claude Code produced the first version of this site —
-                copy, design system, responsive build, and metadata included. No template, no
-                drag-and-drop builder, no week of back-and-forth.
-              </p>
-              <p class="mt-6 font-mono text-[13px] font-medium text-amber">
-                This site started as one of them.
-              </p>
-            </article>
-          </div>
-
-          <!-- right: sticky artifact panel — the things a reader can inspect -->
-          <aside aria-label="Inspectable artifacts" class="reveal min-w-0 lg:sticky lg:top-24">
-            <div class="rounded-md border border-line bg-panel-2/90 p-6 shadow-[0_0_40px_-18px_rgba(255,178,36,0.4)]">
-              <div>
-                <p class="font-mono text-[13px] text-dim">spec · docs/ENGINE.md §4 — model routing</p>
-                <p class="mt-4 border-l-2 border-line pl-4 font-mono text-[13px] leading-relaxed text-chalk">
-                  {routingSpec}
-                </p>
-                <p class="mt-4 font-mono text-[13px] text-dim">// from a spec I wrote — repo not public</p>
-              </div>
-              <div class="mt-6 border-t border-line-soft pt-6">
-                <p class="font-mono text-[13px] text-dim">source · src/layouts/Layout.astro:44-53</p>
-                <pre class="artifact-pre mt-4 overflow-x-auto border-l-2 border-amber/70 pl-4 font-mono text-[13px] leading-relaxed text-chalk"><code>{posthogSnippet}</code></pre>
-                <p class="mt-4 font-mono text-[13px] text-dim">
-                  // <a
-                    href={repoUrl}
-                    rel="noopener"
-                    target="_blank"
-                    class="text-amber hover:underline"
-                  >verbatim from this page's source ↗</a>
-                </p>
-              </div>
-            </div>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== BOOKING APP ===== -->
-    <section id="booking" class="border-t border-line-soft py-20 sm:py-28">
-      <div class="mx-auto max-w-6xl px-6 sm:px-8">
-        <div class="reveal max-w-2xl">
-          <p class="eyebrow">booking_app — deployed, not a mockup</p>
-          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">
-            Open it and book a slot.
-          </h2>
-          <p class="mt-6 text-[17px] leading-relaxed text-mist">
-            A multi-tenant booking application — Next.js 15, Supabase with row-level security,
-            one deploy that serves every customer by slug. It was specced issue by issue in
-            Linear and built by the agent crew above; every change went through a review gate.
-            The link below is my own tenant on it. Pick a time and it writes a real row.
-          </p>
-        </div>
-
-        <div class="mt-10 grid gap-6 lg:grid-cols-[1fr_0.85fr] lg:items-start">
-          <div class="reveal min-w-0 rounded-md border border-amber/50 bg-panel p-6 shadow-[0_0_40px_-18px_rgba(255,178,36,0.4)]">
-            <p class="font-mono text-[13px] tracking-wider text-amber uppercase">live · try it</p>
-            <p class="mt-4 font-mono text-[13px] break-all text-chalk">booking.pedroestevez.com</p>
-            <div class="mt-6 flex flex-wrap items-center gap-4">
-              <a
-                href={bookingUrl}
-                rel="noopener"
-                target="_blank"
-                class="cta-primary inline-flex min-h-11 items-center rounded-sm bg-amber px-6 py-4 font-mono text-sm font-semibold text-harbor"
-              >book_a_slot ↗</a>
-              <a
-                href={bookingRepoUrl}
-                rel="noopener"
-                target="_blank"
-                class="inline-flex min-h-11 items-center rounded-sm border border-line px-6 py-4 font-mono text-sm font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
-              >read_the_source ↗</a>
-            </div>
-          </div>
-
-          <!-- What's real and what isn't — the same answer the app's own
-               confirmation screen gives, so the two can never contradict. -->
-          <aside aria-label="What is and isn't wired" class="reveal min-w-0 rounded-md border border-line bg-panel-2/90 p-6">
-            <p class="font-mono text-[13px] text-dim">// status, stated plainly</p>
-            <p class="mt-4 font-mono text-[13px] tracking-wider text-delta uppercase">wired</p>
-            <ul class="mt-3 space-y-2">
-              {bookingWired.map((item) => (
-                <li class="flex gap-3 text-sm leading-relaxed text-mist">
-                  <span aria-hidden="true" class="mt-2 h-px w-3 shrink-0 bg-delta"></span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <p class="mt-6 font-mono text-[13px] tracking-wider text-dim uppercase">not yet</p>
-            <ul class="mt-3 space-y-2">
-              {bookingNotWired.map((item) => (
-                <li class="flex gap-3 text-sm leading-relaxed text-dim">
-                  <span aria-hidden="true" class="mt-2 h-px w-3 shrink-0 bg-line"></span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <p class="mt-6 border-t border-line-soft pt-4 font-mono text-[13px] leading-relaxed text-dim">
-              // the confirmation screen says the same thing — book a slot and it names the
-              address the confirmation was sent to, and says payment isn't wired yet
-            </p>
-          </aside>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SERVICES ===== -->
-    <section id="services" class="border-t border-line-soft bg-panel-2/40 py-20 sm:py-28">
-      <div class="mx-auto max-w-6xl px-6 sm:px-8">
-        <div class="reveal max-w-2xl">
-          <p class="eyebrow">services — fixed scope</p>
-          <h2 class="mt-4 font-display text-3xl tracking-tight uppercase sm:text-4xl">Productized data services</h2>
-          <p class="mt-6 text-[17px] leading-relaxed text-mist">
-            Fixed prices for defined outcomes — no hourly billing, no retainers. Send your dataset
-            and your question — get back a confirmed price and a delivery date. Prices are starting
-            points; final scope is shaped on a free discovery call. Larger scope? Quoted as a second
-            phase — never hourly. This is not staff augmentation and not an ongoing analytics
-            function — it's a defined piece of work with an end date. Priced by what the work saves,
-            not by hours spent.
-          </p>
-        </div>
-        <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
-            <article class="reveal flex flex-col rounded-md border border-line bg-panel p-6 transition-colors hover:border-amber/60">
-              <div class="flex items-baseline justify-between gap-3">
-                <span class="rounded-sm bg-harbor px-2 py-1 font-mono text-[13px] font-semibold tracking-widest text-amber">{s.code}</span>
-                <span class="text-right font-mono text-sm font-semibold text-chalk">
-                  {s.price.startsWith('from') ? <><span class="text-[13px] font-medium text-dim">from </span>{s.price.slice(5)}</> : s.price}
-                </span>
-              </div>
-              {s.priceNote && <p class="mt-1 text-right font-mono text-[13px] text-dim">{s.priceNote}</p>}
-              <h3 class="mt-4 text-[17px] font-bold text-chalk">{s.name}</h3>
-              <p class="mt-2 text-sm leading-relaxed text-dim">{s.desc}</p>
-              {s.entry && (
-                <p class="mt-2 font-mono text-[13px] leading-relaxed text-dim">{s.entry}</p>
-              )}
-              <ul class="mt-4 flex-1 space-y-2">
-                {s.points.map((p) => (
-                  <li class="flex gap-2 text-sm leading-snug text-mist">
-                    <span aria-hidden="true" class="mt-[0.5em] h-px w-3.5 flex-none bg-amber/70"></span>
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={quoteMailto(s.name)}
-                class="mt-6 inline-flex min-h-11 items-center justify-center rounded-sm border border-line px-4 py-2 text-center font-mono text-[13px] font-medium text-chalk transition-colors hover:border-amber hover:text-amber"
-              >Get a quote →</a>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-
     <!-- ===== CONTACT ===== -->
     <section id="contact" class="plot-grid-up relative border-t border-line-soft py-24 sm:py-32">
       <div class="mx-auto max-w-6xl px-6 sm:px-8 text-center">
         <p class="eyebrow reveal justify-center">contact</p>
         <h2 class="reveal mt-6 font-display text-[clamp(2.25rem,6vw,3rem)] leading-[1.02] tracking-tight uppercase">
-          Got a messy process?<br /><span class="text-amber">Let's automate it.</span>
+          Hiring for AI workflow and automation?<br /><span class="text-amber">Let's talk.</span>
         </h2>
         <p class="reveal mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-mist">
-          Hiring for a role, or holding a dataset that owes you answers — either way, the first
-          conversation is free.
+          The systems are inspectable: the booking demo writes a real row, the repos are public,
+          and this page's own source is one of them. If you are hiring someone to build AI
+          workflows and get a team using them, email me. Available immediately, contract or
+          full-time.
         </p>
         <div class="reveal mt-10 flex flex-wrap items-center justify-center gap-4">
           <a
-            href={`mailto:${email}`}
+            href={hireMailto}
             class="cta-primary inline-flex min-h-11 items-center rounded-sm bg-amber px-6 py-4 font-mono text-sm font-semibold text-harbor"
           >{email}</a>
           <a
@@ -738,7 +901,7 @@ const services = [
   <footer class="border-t border-line-soft py-8">
     <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 font-mono text-[13px] text-dim sm:flex-row sm:px-8">
       <p>© {new Date().getFullYear()} Pedro Estevez</p>
-      <p>built_with Claude Code · first version in &lt; 60 min · <span class="text-amber">this page is the demo</span></p>
+      <p>built_with Claude Code · shipped by the six-stage pipeline · <span class="text-amber">this page is the demo</span></p>
     </div>
   </footer>
 </Layout>
