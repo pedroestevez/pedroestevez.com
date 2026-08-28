@@ -51,7 +51,7 @@ const description =
             capture_pageview: true,
             autocapture: true,
           });
-          window.posthog.register({ ac_site: phSlug, ac_business: phBusiness });
+          window.posthog.register({ site: phSlug, business: phBusiness });
         };
         document.head.appendChild(s);
       })();
